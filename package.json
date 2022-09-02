@@ -1,0 +1,40 @@
+{
+    "name": "02-app-fil-rouge-et-challenge",
+    "version": "1.0.0",
+    "scripts": {
+        "watch": "concurrently \"npm start --prefix client\" \"npm run dev --prefix server\"",
+        "install": "concurrently \"npm i --prefix client\" \"npm i --prefix server\""
+    },
+    "devDependencies": {
+        "concurrently": "^7.3.0"
+    },
+    "prettier": {
+        "printWidth": 80,
+        "tabWidth": 4,
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false,
+        "overrides": [
+            {
+                "files": "*.js",
+                "options": {
+                    "parser": "babel"
+                }
+            },
+            {
+                "files": "*.json",
+                "options": {
+                    "parser": "json",
+                    "tabWidth": 4
+                }
+            }
+        ],
+        "semi": true,
+        "requirePragma": false,
+        "proseWrap": "preserve",
+        "arrowParens": "avoid",
+        "htmlWhitespaceSensitivity": "css",
+        "quoteProps": "as-needed"
+    }
+}

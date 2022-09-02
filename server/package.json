@@ -1,0 +1,60 @@
+{
+    "name": "reactshop",
+    "version": "1.0.0",
+    "description": "MERN Shopping Cart",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js",
+        "dev": "nodemon server.js",
+        "client": "npm start --prefix client",
+        "init": "npm install && npm install --prefix client",
+        "watch": "concurrently \"npm run dev\" \"npm run client\""
+    },
+    "author": "Oclock",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "commonmark": "^0.30.0",
+        "cors": "^2.8.5",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.3",
+        "express-validator": "^6.14.0",
+        "jsonwebtoken": "^8.5.1",
+        "multer": "^1.4.4",
+        "pg": "^8.7.3",
+        "sequelize": "^6.19.0"
+    },
+    "devDependencies": {
+        "concurrently": "^6.5.1",
+        "nodemon": "^2.0.15"
+    },
+
+    "prettier": {
+        "printWidth": 80,
+        "tabWidth": 4,
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false,
+        "overrides": [
+            {
+                "files": "*.js",
+                "options": {
+                    "parser": "babel"
+                }
+            },
+            {
+                "files": "*.json",
+                "options": {
+                    "parser": "json"
+                }
+            }
+        ],
+        "semi": true,
+        "requirePragma": false,
+        "proseWrap": "preserve",
+        "arrowParens": "avoid",
+        "htmlWhitespaceSensitivity": "css",
+        "quoteProps": "as-needed"
+    }
+}
