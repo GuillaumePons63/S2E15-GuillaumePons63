@@ -4,6 +4,7 @@ import axios from 'axios';
 import { AuthContext } from '../../contexts/auth';
 import { REGISTER, ERROR } from '../../contexts/auth/types';
 import AuthForm from './AuthForm';
+import setAuthToken from '../../utils/setAuthToken';
 
 const Register = () => {
     const [, dispatch] = useContext(AuthContext);
@@ -19,9 +20,10 @@ const Register = () => {
         axios
             .post('/api/users/register', data)
             .then(res => {
-                const { token } = res.data;
+                const { token, user } = res.data;
                 localStorage.setItem('token', token);
-
+                localStorage.setItem('user', JSON.stringify(user));
+                setAuthToken(token);
                 dispatch({ type: REGISTER, payload: token });
             })
             .catch(e => console.error(e));

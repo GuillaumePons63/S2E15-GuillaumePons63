@@ -17,9 +17,9 @@ const Login = () => {
             .post('/api/auth', data)
             .then(res => {
                 const { token, user } = res.data;
-                setAuthToken(token);
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
+                setAuthToken(token);
                 dispatch({ type: LOGIN, payload: res.data });
             })
             .catch(e => console.error(e));

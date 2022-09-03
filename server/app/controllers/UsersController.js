@@ -43,6 +43,8 @@ const UsersController = {
             },
         };
 
+        delete user.dataValues.password;
+
         jwt.sign(
             payload,
             process.env.APP_SECRET,
@@ -51,7 +53,7 @@ const UsersController = {
             },
             (err, token) => {
                 if (err) throw err;
-                res.status(200).json({ token });
+                res.status(200).json({ token, user });
             }
         );
     },
