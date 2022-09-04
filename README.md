@@ -16,7 +16,15 @@ Sur le port 3000 : le client react, sur le port 5000 : le server express, sur le
 
 - Register, Login, Logout, système de permissions implémenter sur le server.
 - Ajout de catégories et de produits, ajout de produit au panier, coupon de réduction, mise à jour des quantités dans le panier.
+
+## J1
+
+- Sur le server, faire le register, login,  
 - Coder devant eux la méthode `can(action)` sur le modèle `User`, ainsi que les associations entre `User`, `RoleUser`, `Role`, `Ability` et `AbilityRole`.
+
+## J2
+
+- Faire les fonctions SQL.
 
 ## Challenge J1
 

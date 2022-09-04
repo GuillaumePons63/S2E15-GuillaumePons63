@@ -17,7 +17,7 @@ Une procédure stockée est une fonction, qui porte le nom de procédure ..
 
 ## Qu'est-ce qu'une RULE ?
 
-Un règle est un genre de trigger qui va intervenir automatiquement au moment ou on le souhaite, avant ou après la création ou mise à jour d'une ressource etc etc
+Un règle est un genre de trigger qui va intervenir automatiquement au moment ou on le souhaite, avant ou après la création ou mise à jour d'une ressource etc...
 
 ## Pourquoi utiliser de telles choses ?
 
