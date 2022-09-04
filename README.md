@@ -19,12 +19,16 @@ Sur le port 3000 : le client react, sur le port 5000 : le server express, sur le
 
 ## J1
 
-- Sur le server, faire le register, login,  
-- Coder devant eux la méthode `can(action)` sur le modèle `User`, ainsi que les associations entre `User`, `RoleUser`, `Role`, `Ability` et `AbilityRole`.
+- Sur le server :
+- register : `server/controllers/UsersController.register`
+- login : `server/controllers/AuthController.login`  
+- Coder la méthode `can(action)` sur le modèle `User`
+- Coder les associations entre `User`, `RoleUser`, `Role`, `Ability` et `AbilityRole`.
 
 ## J2
 
 - Faire les fonctions SQL.
+- Montrer `pg_notify`
 
 ## Challenge J1
 
