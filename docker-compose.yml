@@ -61,6 +61,22 @@ services:
     networks:
       - nodejs
 
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    ports:
+      - '80:80'
+    expose:
+      - '80'
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - pgsql
+      - express-server
+    networks:
+      - nodejs
+
   php:
     build:
       context: .
