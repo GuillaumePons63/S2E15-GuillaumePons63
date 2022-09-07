@@ -26,14 +26,7 @@ const UsersController = {
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
 
-        // Attribuer un rôle ici
-        const role = await Role.findOne({
-            where: {
-                name: process.env.CUSTOMER,
-            },
-        });
-
-        user.role_id = role.id;
+        // Attribuer un rôle par défaut ici
 
         await user.save();
 
