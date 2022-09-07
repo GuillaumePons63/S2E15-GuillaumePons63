@@ -11,12 +11,12 @@ const AbilityRole = require('./AbilityRole');
 const Coupon = require('./Coupon');
 
 Ability.belongsToMany(Role, {
-    as: 'abilities',
+    as: 'roles',
     through: AbilityRole,
 });
 
 Role.belongsToMany(Ability, {
-    as: 'roles',
+    as: 'abilities',
     through: AbilityRole,
 });
 

@@ -24,6 +24,7 @@ const reducer = (state, action) => {
         case LOGOUT:
         case ERROR: {
             localStorage.removeItem('token');
+            localStorage.removeItem('user');
             setAuthToken();
             return {
                 ...state,

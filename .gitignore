@@ -1,3 +1,6 @@
 node_modules
 .env
-README.md
+test.js
+.idea
+pgsql
+redisdata

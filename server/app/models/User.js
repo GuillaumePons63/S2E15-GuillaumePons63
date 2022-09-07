@@ -1,7 +1,21 @@
 const { DataTypes, Model } = require('sequelize');
 const getConnexion = require('./getConnexion');
 
-class User extends Model {}
+class User extends Model {
+    can(action) {
+        let ok = false;
+
+        this['roles'].forEach(role => {
+            role['abilities'].forEach(ability => {
+                if (ability.name === action) {
+                    ok = true;
+                }
+            });
+        });
+
+        return ok;
+    }
+}
 
 User.init(
     {
