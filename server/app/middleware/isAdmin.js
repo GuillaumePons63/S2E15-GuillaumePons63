@@ -1,14 +1,25 @@
-import User from '../models/User.js';
+const { User } = require('../models');
 
-export default async function (req, res, next) {
-    try {
-        const { userId } = req.user;
+async function isAdmin(req, res, next) {
+    const { id } = req.user;
 
-        // Aller chercher l'utilisateur avec le rôle qui lui est attribué
+    // Aller chercher l'utilisateur avec le rôle qui lui est attribué
+    const user = await User.findByPk(id, {
+        include: { all: true, nested: true },
+    });
 
-        next();
-    } catch (e) {
-        console.error(e);
-        res.status(401).json({ msg: 'Caught an error somewhere' });
+    let role = null;
+    if (user.hasOwnProperty('roles')) {
+        role = user.roles.find(role => role.name === process.env.ADMIN);
     }
+
+    if (role) {
+        return next();
+    }
+
+    const error = new Error('non non non');
+    error.status = 403;
+    return next(error);
 }
+
+module.exports = isAdmin;

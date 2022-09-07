@@ -4,7 +4,10 @@ function auth(req, res, next) {
     const token = req.header('x-auth-token');
 
     if (!token) {
-        return res.status(401).json({ msg: 'Auth denied' });
+        // return res.status(401).json({ msg: 'Auth denied' });
+        const error = new Error('Encore une catastrophe');
+        error.status = 401;
+        return next(error);
     }
 
     try {
@@ -14,8 +17,7 @@ function auth(req, res, next) {
 
         next();
     } catch (e) {
-        console.error(e);
-        res.status(401).json({ msg: 'Caught an error somewhere' });
+        next(e);
     }
 }
 

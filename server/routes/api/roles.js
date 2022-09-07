@@ -5,11 +5,12 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../app/middleware/auth.js');
-
+const isAdmin = require('../../app/middleware/isAdmin');
+const authorize = require('../../app/middleware/authorize');
 /**
  * @route POST api/roles
  */
-router.get('/', catchErrors(RolesController.index));
+router.get('/', auth, isAdmin, catchErrors(RolesController.index));
 
 /**
  *
@@ -21,6 +22,7 @@ router.post(
     '/create',
     [
         auth,
+        authorize('create-role'),
         [
             check('name', 'le nom est obligatoire')
                 .not()
