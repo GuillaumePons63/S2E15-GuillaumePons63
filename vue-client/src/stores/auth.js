@@ -20,14 +20,14 @@ export const useAuthStore = defineStore('auth', {
 
     getters: {
         checkAuth() {
-            localStorage.setItem('token', 'jwt');
             this.token = localStorage.getItem('token');
 
+            // si token, configure axios aussi
             if (this.token) {
                 this.isAuthenticated = true;
                 this.isLoading = false;
+                return true;
             }
-            // si token, configure axios
         },
     },
 });

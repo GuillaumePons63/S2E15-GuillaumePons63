@@ -38,10 +38,11 @@ import { useAuthStore } from '@/stores/auth.js';
 
 <script>
 import config from '@/mixins/config.js';
+import axiosConfig from '@/mixins/axios.js';
 
 export default {
     name: 'Login',
-    mixins: [config],
+    mixins: [config, axiosConfig],
     data() {
         return {
             email: '',
@@ -60,7 +61,7 @@ export default {
                     const { token, user } = res.data;
                     localStorage.setItem('token', token);
                     localStorage.setItem('user', JSON.stringify(user));
-                    // setAuthToken(token);
+                    this.setAuthToken(token);
                     // dispatch({ type: LOGIN, payload: res.data });
                 })
                 .catch(e => {

@@ -8,5 +8,9 @@
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import { useAuthStore } from '@/stores/auth.js';
-const { isAuthenticated } = useAuthStore();
+const authStore = useAuthStore();
+
+if (authStore.checkAuth) {
+    console.log('isAuth', authStore.isAuthenticated);
+}
 </script>

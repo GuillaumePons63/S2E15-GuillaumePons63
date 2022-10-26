@@ -34,9 +34,10 @@
 
 <script>
 import config from '@/mixins/config.js';
+import axiosConfig from '@/mixins/axios.js';
 
 export default {
-    mixins: [config],
+    mixins: [config, axiosConfig],
     name: 'Register',
     data() {
         return {
@@ -55,7 +56,7 @@ export default {
                     const { token, user } = res.data;
                     localStorage.setItem('token', token);
                     localStorage.setItem('user', JSON.stringify(user));
-                    // setAuthToken(token);
+                    this.setAuthToken(token);
                     // dispatch({ type: REGISTER, payload: token });
                 })
                 .catch(e => console.error(e));
@@ -63,5 +64,3 @@ export default {
     },
 };
 </script>
-
-<style scoped></style>
