@@ -1,5 +1,3 @@
-# Client E-commerce pour express REDIS
+# Client E-commerce pour express ACL
 
----
 
-Un front `REACT` e-commerce modeste destiné à s'entrainé avec `redis`.

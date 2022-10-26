@@ -1,5 +1,5 @@
 {
-    "name": "02-app-fil-rouge-et-challenge",
+    "name": "express-acl",
     "version": "1.0.0",
     "scripts": {
         "watch": "concurrently \"npm start --prefix client\" \"npm run dev --prefix server\"",

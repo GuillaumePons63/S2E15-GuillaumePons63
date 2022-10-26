@@ -35,7 +35,6 @@ services:
     entrypoint: [ 'npm', 'start' , '--host', '0.0.0.0' ]
     working_dir: /var/www/html/client
     depends_on:
-      - postgres
       - express-server
 
   express-server:
@@ -48,6 +47,20 @@ services:
       - '5000:5000'
     expose:
       - '5000'
+    environment:
+      APP_URL: http://localhost
+      PORT: 5000
+      DB_NAME: shopping
+      DB_ADMIN_URL: postgres://postgres:secret@pgsql
+      DB_URL: postgres://student:secret@pgsql/shopping
+      DB_USERNAME: student
+      DB_PASSWD: secret
+      DB_HOST: pgsql
+      DB_ENV: postgres
+      APP_SECRET: secrettoken
+      EMPLOYEE: employee
+      CUSTOMER: customer
+      ADMIN: admin
     working_dir: /var/www/html/postgres
     entrypoint: [ 'npm', 'run', 'dev', '--host', '0.0.0.0' ]
     depends_on:
