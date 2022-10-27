@@ -1,7 +1,7 @@
 <template>
     <div class="container mt-3">
         <h2 class="text-info">
-            Register or <RouterLink to="/login">Login</RouterLink>
+            Login or <RouterLink to="/register">Register</RouterLink>
         </h2>
         <form @submit.prevent="onSubmit" class="mt-5 mb-5">
             <div class="form-group">
@@ -39,6 +39,6 @@ async function onSubmit(e) {
     const email = e.target.querySelector('input[name=email]').value;
     const password = e.target.querySelector('input[name=password]').value;
 
-    await authStore.register(email, password);
+    await authStore.login(email, password);
 }
 </script>
