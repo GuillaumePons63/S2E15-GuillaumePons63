@@ -42,6 +42,7 @@ export const useAuthStore = defineStore('auth', {
                     this.user = user;
                     this.token = token;
                     setAuthToken();
+                    router.push('/dashboard');
                     // dispatch({ type: LOGIN, payload: res.data });
                 })
                 .catch(e => {
