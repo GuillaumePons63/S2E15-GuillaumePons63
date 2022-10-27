@@ -5,12 +5,11 @@
 </template>
 
 <script setup>
+import { useAuthStore } from '@/stores/auth.js';
+import { setAuthToken } from '@/mixins/axios.js';
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-import { useAuthStore } from '@/stores/auth.js';
+setAuthToken();
 const authStore = useAuthStore();
-
-if (authStore.checkAuth) {
-    console.log('isAuth', authStore.isAuthenticated);
-}
+authStore.isAuth;
 </script>

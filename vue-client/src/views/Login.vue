@@ -3,7 +3,7 @@
         <h2 class="text-info">
             Login or <RouterLink to="/register">Register</RouterLink>
         </h2>
-        <form @submit.prevent="login()" class="mt-5 mb-5">
+        <form @submit.prevent="onSubmit" class="mt-5 mb-5">
             <div class="form-group">
                 <label for="email">Email address</label>
                 <input
@@ -11,7 +11,6 @@
                     name="email"
                     type="email"
                     id="email"
-                    v-model="email"
                     placeholder="
             Your Email"
                 />
@@ -23,7 +22,6 @@
                     name="password"
                     id="password"
                     type="password"
-                    v-model="password"
                     placeholder="Your password"
                 />
             </div>
@@ -34,43 +32,13 @@
 
 <script setup>
 import { useAuthStore } from '@/stores/auth.js';
-</script>
 
-<script>
-import config from '@/mixins/config.js';
-import axiosConfig from '@/mixins/axios.js';
+async function onSubmit(e) {
+    const authStore = useAuthStore();
 
-export default {
-    name: 'Login',
-    mixins: [config, axiosConfig],
-    data() {
-        return {
-            email: '',
-            password: '',
-        };
-    },
+    const email = e.target.querySelector('input[name=email]').value;
+    const password = e.target.querySelector('input[name=password]').value;
 
-    methods: {
-        async login() {
-            this.axios
-                .post(`${this.dev_server_url}/auth`, {
-                    email: this.email,
-                    password: this.password,
-                })
-                .then(res => {
-                    const { token, user } = res.data;
-                    localStorage.setItem('token', token);
-                    localStorage.setItem('user', JSON.stringify(user));
-                    this.setAuthToken(token);
-                    // dispatch({ type: LOGIN, payload: res.data });
-                })
-                .catch(e => {
-                    for (let prop in e) {
-                        // TODO: avoir des fichiers nommés comme les codes d'erreurs et faire des redirections
-                        console.log(prop, e[prop]);
-                    }
-                });
-        },
-    },
-};
+    await authStore.login(email, password);
+}
 </script>

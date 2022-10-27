@@ -34,10 +34,10 @@
 
 <script>
 import config from '@/mixins/config.js';
-import axiosConfig from '@/mixins/axios.js';
+//import axiosConfig from '@/mixins/axios.js';
 
 export default {
-    mixins: [config, axiosConfig],
+    mixins: [config],
     name: 'Register',
     data() {
         return {
