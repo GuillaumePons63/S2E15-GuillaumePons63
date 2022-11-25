@@ -16,8 +16,8 @@ const AuthController = {
 
     async login(req, res) {
         const { email, password } = req.body;
-        // Does user exist ?
 
+        //* Does user exist ?
         const user = await User.findOne({
             where: { email: email },
             attributes: { exclude: ['name', 'created_at', 'updated_at'] },
@@ -25,17 +25,15 @@ const AuthController = {
         });
 
         if (!user) {
-            return res.status(400).json({
-                errors: [{ msg: 'Email or password invalid' }],
-            });
+            //* Attention, aux messages d'erreur quand on est en PROD
+            throw new Error('Email or password invalid');
         }
 
+        //* On vérifie la validité du mot de passe
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
-            return res.status(400).json({
-                errors: [{ msg: 'Email or password invalid' }],
-            });
+            throw new Error('Email or password invalid');
         }
 
         const payload = {

@@ -5,6 +5,7 @@ const auth = require('../../app/middleware/auth');
 const Coupon = require('../../app/models/Coupon');
 const { catchErrors } = require('../../handlers/ErrorHandlers');
 const CouponsController = require('../../app/controllers/CouponsController');
+const isAdmin = require('../../app/middleware/isAdmin');
 
 /**
  * @route GET api/coupons
@@ -51,6 +52,7 @@ router.post(
     '/create',
     [
         auth,
+        isAdmin,
         [
             check('code', 'le code est obligatoire').trim().escape(),
             function (req, res, next) {

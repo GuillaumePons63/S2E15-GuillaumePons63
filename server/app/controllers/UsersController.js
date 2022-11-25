@@ -6,6 +6,7 @@ const UsersController = {
     async register(req, res) {
         const { email, password } = req.body;
 
+        // * Créé une instance de User, mais pas encore sauvegardée
         const user = User.build({
             email,
             password,
@@ -18,24 +19,31 @@ const UsersController = {
         });
 
         if (existingUser) {
-            return res.status(400).json({
-                errors: [{ msg: 'User already exists' }],
-            });
+            //§ Merci Julie :)
+            throw new Error('User already exists');
         }
         // Hash password with salt
+        // password123!
+        // $2!ljknhdfgljhdfgpijzzrgiojsrgpojljqkser
+        // password123!
+        // $2!ljknhdfgljhdfgiuwhfdgoijhfgxoihfgiunuhsefîodj
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
 
         // Attribuer un rôle par défaut ici
 
+        //$2a$10$eagneoIJBbU0.LDUlkaISONZybPrGuWF3ONQUcmvdIg5MBwiTZXPG;
+        //$2a$10$VIniz81ck4h4yvmD.NpIReHgWLn8bG1Egw1K8AUGNyA5zzG69yg36;
         await user.save();
 
+        //! générer notre JWT  JsonWebToken
         const payload = {
             user: {
                 id: user.id,
             },
         };
 
+        //! On n'oublie pas d'effacer le mot de passe de user avant de l'envoyer en réponse
         delete user.dataValues.password;
 
         jwt.sign(

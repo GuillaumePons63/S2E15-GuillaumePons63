@@ -17,6 +17,8 @@ const installRoute = require('./install');
 const port = process.env.PORT || 5000;
 
 //app.set('query parser', 'simple'); // Ne parse les query string qu'en string, pas en objets ou autre format de données.
+//* Cors doivent paramétrés pour n'autoriser que quelques app,
+//* sauf si vous faites une API  public
 app.use(cors('*'));
 app.use(express.json({ limit: '5mb', extended: false }));
 
