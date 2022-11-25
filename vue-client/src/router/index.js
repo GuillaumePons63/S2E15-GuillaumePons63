@@ -50,7 +50,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async to => {
-    // redirect to login page if not logged in and trying to access a restricted page
+    //* redirect to login page if not logged in and trying to access a restricted page
     const publicPages = ['/', '/login', '/register', '/shop', '/cart'];
     const authRequired = !publicPages.includes(to.path);
     const authStore = useAuthStore();

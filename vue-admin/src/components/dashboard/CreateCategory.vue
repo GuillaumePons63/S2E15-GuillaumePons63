@@ -71,14 +71,11 @@ export default {
     },
     methods: {
         async createCategory() {
-            const res = await fetch(
-                `${this.server_url}/categories/create`,
-                {
-                    method: 'POST',
-                    headers: this.headers,
-                    body: JSON.stringify({ name: this.category }),
-                }
-            );
+            const res = await fetch(`${this.server_url}/categories/create`, {
+                method: 'POST',
+                headers: this.headers,
+                body: JSON.stringify({ name: this.category }),
+            });
 
             this.categories = await res.json();
 

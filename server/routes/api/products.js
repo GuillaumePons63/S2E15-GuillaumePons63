@@ -7,6 +7,7 @@ const { check, param, validationResult } = require('express-validator');
 const auth = require('../../app/middleware/auth');
 const Product = require('../../app/models/Product');
 const Category = require('../../app/models/Category');
+const authorize = require('../../app/middleware/authorize');
 const ProductsController = require('../../app/controllers/ProductsController');
 /**
  * @route GET /api/products
@@ -29,6 +30,7 @@ router.post(
     '/create',
     [
         auth,
+        authorize('create-product'),
         upload.single('image'),
         function (req, res, next) {
             const errors = validationResult(req);

@@ -46,7 +46,6 @@ export const useAuthStore = defineStore('auth', {
                     this.token = token;
                     setAuthToken();
                     router.push('/shop');
-                    // dispatch({ type: LOGIN, payload: res.data });
                 })
                 .catch(e => {
                     for (let prop in e) {
@@ -60,6 +59,7 @@ export const useAuthStore = defineStore('auth', {
             localStorage.removeItem('user');
             localStorage.removeItem('token');
             this.isAuthenticated = false;
+            this.token = null;
             router.push('/login');
         },
     },

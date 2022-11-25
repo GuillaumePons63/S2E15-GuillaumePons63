@@ -19,8 +19,14 @@ const ProductsController = {
     },
 
     async store(req, res) {
-        const { category_id, title, metaDescription, description, priceHT } =
-            req.body;
+        const {
+            category_id,
+            title,
+            image,
+            metaDescription,
+            description,
+            priceHT,
+        } = req.body;
 
         const cat = await Category.findOne({
             where: {
@@ -33,10 +39,7 @@ const ProductsController = {
             title: title,
             metaDescription: metaDescription,
             priceHT: priceHT,
-            image: req.file.path.replace(
-                'uploads',
-                'http://localhost:5000/uploads'
-            ),
+            image: image,
             description: description,
         });
 

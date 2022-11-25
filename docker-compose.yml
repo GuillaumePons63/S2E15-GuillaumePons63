@@ -1,147 +1,125 @@
 networks:
-  nodejs:
-    driver: bridge
+    nodejs:
+        driver: bridge
 services:
-  npm:
-    image: node:current-alpine3.16
-    volumes:
-      - ./:/var/www/html
-    working_dir: /var/www/html
-    networks:
-      - nodejs
+    npm:
+        image: node:current-alpine3.16
+        volumes:
+            - ./:/var/www/html
+        working_dir: /var/www/html
+        networks:
+            - nodejs
 
-  pgsql:
-    image: postgres:14.3-alpine3.16
-    environment:
-      POSTGRES_PASSWORD: secret
-      POSTGRES_USER: student
-    volumes:
-      - ./pgsql:/var/lib/postgresql/data
-      - ./schema.sql:/docker-entrypoint-initdb.d/create_tables.sql
-    networks:
-      - nodejs
+    pgsql:
+        image: postgres:14.3-alpine3.16
+        environment:
+            POSTGRES_PASSWORD: secret
+            POSTGRES_USER: student
+        volumes:
+            - ./pgsql:/var/lib/postgresql/data
+            - ./schema.sql:/docker-entrypoint-initdb.d/create_tables.sql
+        networks:
+            - nodejs
 
-  client:
-    image: node:current-alpine3.16
-    ports:
-      - "3000:3000"
-    expose:
-      - "3000"
-    stdin_open: true
-    volumes:
-      - ./client:/var/www/html/client
-    networks:
-      - nodejs
-    entrypoint: [ 'npm', 'start' , '--host', '0.0.0.0' ]
-    working_dir: /var/www/html/client
-    depends_on:
-      - express-server
+    vue-client:
+        image: node:current-alpine3.16
+        ports:
+            - '5173:5173'
+        expose:
+            - '5173'
+        volumes:
+            - ./vue-client:/var/www/html/vue-client
+        networks:
+            - nodejs
+        entrypoint: ['npm', 'run', 'dev', '--host', '0.0.0.0']
+        working_dir: /var/www/html/vue-client
+        depends_on:
+            - express-server
 
-  vue-client:
-    image: node:current-alpine3.16
-    ports:
-      - '5173:5173'
-    expose:
-      - '5173'
-    stdin_open: true
-    volumes:
-      - ./vue-client:/var/www/html/vue-client
-    networks:
-      - nodejs
-    entrypoint: [ 'npm', 'run', 'dev', '--host', '0.0.0.0' ]
-    working_dir: /var/www/html/vue-client
-    depends_on:
-      - express-server
+    vue-admin:
+        image: node:current-alpine3.16
+        ports:
+            - '5174:5174'
+        expose:
+            - '5174'
+        volumes:
+            - ./vue-admin:/var/www/html/vue-admin
+        networks:
+            - nodejs
+        entrypoint: ['npm', 'run', 'dev', '--host', '0.0.0.0']
+        working_dir: /var/www/html/vue-admin
+        depends_on:
+            - express-server
 
-  vue-admin:
-    image: node:current-alpine3.16
-    ports:
-      - '5174:5174'
-    expose:
-      - '5174'
-    stdin_open: true
-    volumes:
-      - ./vue-admin:/var/www/html/vue-admin
-    networks:
-      - nodejs
-    entrypoint: [ 'npm', 'run', 'dev', '--host', '0.0.0.0' ]
-    working_dir: /var/www/html/vue-admin
-    depends_on:
-      - express-server
+    express-server:
+        image: node:current-alpine3.16
+        volumes:
+            - ./server:/var/www/html/postgres
+        networks:
+            - nodejs
+        ports:
+            - '5000:5000'
+        expose:
+            - '5000'
+        environment:
+            APP_URL: http://localhost
+            PORT: 5000
+            DB_NAME: shopping
+            DB_ADMIN_URL: postgres://postgres:secret@pgsql
+            DB_URL: postgres://student:secret@pgsql/shopping
+            DB_USERNAME: student
+            DB_PASSWD: secret
+            DB_HOST: pgsql
+            DB_ENV: postgres
+            APP_SECRET: secrettoken
+            EMPLOYEE: employee
+            CUSTOMER: customer
+            ADMIN: admin
+        working_dir: /var/www/html/postgres
+        entrypoint: ['npm', 'run', 'dev', '--host', '0.0.0.0']
+        depends_on:
+            - redisserver
+            - pgsql
 
-  express-server:
-    image: node:current-alpine3.16
-    volumes:
-      - ./server:/var/www/html/postgres
-    networks:
-      - nodejs
-    ports:
-      - '5000:5000'
-    expose:
-      - '5000'
-    environment:
-      APP_URL: http://localhost
-      PORT: 5000
-      DB_NAME: shopping
-      DB_ADMIN_URL: postgres://postgres:secret@pgsql
-      DB_URL: postgres://student:secret@pgsql/shopping
-      DB_USERNAME: student
-      DB_PASSWD: secret
-      DB_HOST: pgsql
-      DB_ENV: postgres
-      APP_SECRET: secrettoken
-      EMPLOYEE: employee
-      CUSTOMER: customer
-      ADMIN: admin
-    working_dir: /var/www/html/postgres
-    entrypoint: [ 'npm', 'run', 'dev', '--host', '0.0.0.0' ]
-    depends_on:
-      - redisserver
-      - pgsql
+    redisserver:
+        image: redis:latest
+        volumes:
+            - ./redisdata:/data
+        networks:
+            - nodejs
 
-  redisserver:
-    image: redis:latest
-    volumes:
-      - ./redisdata:/data
-    networks:
-      - nodejs
+    nginx:
+        build:
+            context: .
+            dockerfile: nginx.dockerfile
+        ports:
+            - '80:80'
+        expose:
+            - '80'
+        volumes:
+            - ./src:/var/www/html
+        depends_on:
+            - pgsql
+        networks:
+            - nodejs
 
-  nginx:
-    build:
-      context: .
-      dockerfile: nginx.dockerfile
-    ports:
-      - '80:80'
-    expose:
-      - '80'
-    volumes:
-      - ./src:/var/www/html
-    depends_on:
-      - pgsql
-      - express-server
-    networks:
-      - nodejs
+    php:
+        build:
+            context: .
+            dockerfile: php.dockerfile
+        volumes:
+            - ./src:/var/www/html
+        networks:
+            - nodejs
 
-  php:
-    build:
-      context: .
-      dockerfile: php.dockerfile
-    volumes:
-      - ./src:/var/www/html
-    networks:
-      - nodejs
-
-  adminer:
-    build:
-      context: .
-      dockerfile: adminer.dockerfile
-    ports:
-      - '8080:8080'
-    depends_on:
-      - pgsql
-      - php
-    networks:
-      - nodejs
-
-
-
+    adminer:
+        build:
+            context: .
+            dockerfile: adminer.dockerfile
+        ports:
+            - '8080:8080'
+        depends_on:
+            - pgsql
+            - php
+        networks:
+            - nodejs

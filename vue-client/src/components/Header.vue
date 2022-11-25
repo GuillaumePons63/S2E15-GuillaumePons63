@@ -3,7 +3,7 @@
         <div class="top-nav container">
             <div class="logo">
                 <RouterLink to="/">
-                    React / Express / REDIS Ecommerce
+                    VUEjs - Pinia / Express / Postgres Ecommerce
                 </RouterLink>
             </div>
             <NavLinks />
