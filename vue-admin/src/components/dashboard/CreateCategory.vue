@@ -72,7 +72,7 @@ export default {
     methods: {
         async createCategory() {
             const res = await fetch(
-                `${this.dev_server_url}/categories/create`,
+                `${this.server_url}/categories/create`,
                 {
                     method: 'POST',
                     headers: this.headers,

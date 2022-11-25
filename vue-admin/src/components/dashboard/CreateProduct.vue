@@ -125,7 +125,7 @@ export default {
   methods: {
     async getProducts() {
       try {
-        const response = await fetch(`${this.dev_server_url}/products`);
+        const response = await fetch(`${this.server_url}/products`);
 
         this.products = await response.json();
       } catch (e) {
@@ -137,7 +137,7 @@ export default {
     },
     async createProduct() {
       try {
-        const response = await fetch(`${this.dev_server_url}/products/create`, {
+        const response = await fetch(`${this.server_url}/products/create`, {
           method: "POST",
           headers: this.headers,
           body: JSON.stringify(this.product),

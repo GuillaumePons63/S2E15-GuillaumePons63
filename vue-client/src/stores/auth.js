@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia';
 import { axios, setAuthToken } from '@/mixins/axios.js';
+
 import router from '@/router/index.js';
 // fake avatars https://i.pravatar.cc/50?u=toto@gmail.com
+
+const registerUrl = `http://kenshirosan-server.eddi.cloud:5000/api`;
 export const useAuthStore = defineStore('auth', {
     state() {
         return {
@@ -14,7 +17,7 @@ export const useAuthStore = defineStore('auth', {
     actions: {
         async register(email, password) {
             axios
-                .post(`http://localhost:5000/api/users/register`, {
+                .post(`${registerUrl}/users/register`, {
                     email,
                     password,
                 })
@@ -30,7 +33,7 @@ export const useAuthStore = defineStore('auth', {
         },
         async login(email, password) {
             axios
-                .post(`http://localhost:5000/api/auth`, {
+                .post(`${registerUrl}/auth`, {
                     email,
                     password,
                 })
