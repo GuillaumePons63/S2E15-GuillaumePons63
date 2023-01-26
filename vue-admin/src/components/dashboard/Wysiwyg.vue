@@ -1,47 +1,47 @@
 <template>
-  <input id="trix" type="hidden" :name="name" :value="value" />
+    <input id="trix" type="hidden" :name="name" :value="value" />
 
-  <trix-editor
-    ref="trix"
-    input="trix"
-    @trix-change="change"
-    :placeholder="placeholder"
-    :name="name"
-  >
-  </trix-editor>
+    <trix-editor
+        ref="trix"
+        input="trix"
+        @trix-change="change"
+        :placeholder="placeholder"
+        :name="name"
+    >
+    </trix-editor>
 </template>
 
-<style>
-@import "trix/dist/trix.css";
-</style>
-
 <script>
-import Trix from "trix";
+import Trix from 'trix';
 
 export default {
-  props: ["name", "placeholder"],
-
-  data() {
-    return {
-      value: "",
-      about: "",
-      id: "",
-    };
-  },
-
-  watch: {
-    value(val) {
-      if (val === "") {
-        this.$refs.trix.value = "";
-      }
+    props: ['name', 'placeholder'],
+    components: { Trix },
+    data() {
+        return {
+            value: '',
+            about: '',
+            id: '',
+        };
     },
-  },
 
-  methods: {
-    change(event) {
-      this.$emit("changing", event);
-      this.value = this.$refs.trix.value;
+    watch: {
+        value(val) {
+            if (val === '') {
+                this.$refs.trix.value = '';
+            }
+        },
     },
-  },
+
+    methods: {
+        change(event) {
+            this.$emit('changing', event);
+            this.value = this.$refs.trix.value;
+        },
+    },
 };
 </script>
+
+<style>
+@import 'trix/dist/trix.css';
+</style>

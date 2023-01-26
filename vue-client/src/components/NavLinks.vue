@@ -37,9 +37,3 @@ function logout() {
     authStore.logout();
 }
 </script>
-
-<script>
-export default {
-    name: 'NavLinks',
-};
-</script>

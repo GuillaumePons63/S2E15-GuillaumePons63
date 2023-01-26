@@ -102,15 +102,13 @@
     </section>
 </template>
 
-<script setup>
-import Wysiwyg from '@/components/dashboard/Wysiwyg.vue';
-</script>
-
 <script>
+import Wysiwyg from '@/components/dashboard/Wysiwyg.vue';
 import requests from '@/mixins/requests.js';
 
 export default {
     mixins: [requests],
+    components: { Wysiwyg },
     data() {
         return {
             initProd: {

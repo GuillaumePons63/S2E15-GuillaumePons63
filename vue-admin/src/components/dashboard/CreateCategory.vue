@@ -60,7 +60,7 @@
 
 <script>
 import requests from '@/mixins/requests.js';
-
+import { axios } from '@/mixins/axios';
 export default {
     mixins: [requests],
     data() {
@@ -71,13 +71,12 @@ export default {
     },
     methods: {
         async createCategory() {
-            const res = await fetch(`${this.server_url}/categories/create`, {
-                method: 'POST',
-                headers: this.headers,
-                body: JSON.stringify({ name: this.category }),
-            });
+            const res = await axios.post(
+                `${this.server_url}/categories/create`,
+                { name: this.category }
+            );
 
-            this.categories = await res.json();
+            this.categories = res.data;
 
             this.category = '';
         },
