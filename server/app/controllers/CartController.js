@@ -7,9 +7,11 @@ const CartController = {
         // Nos ids sont un tableau
         // SELECT * FROM `products` WHERE id IN (2, 3)
         // Chercher la méthode de sequelize qui permet de faire des requêtes de type IN
-        const { ids } = req.body;
 
-        const products = await Product.findAll({
+        const { products } = req.body;
+        const ids = products.map(p => p.id);
+
+        const prods = await Product.findAll({
             where: {
                 id: {
                     [Op.in]: ids, // Ne pas utiliser req.body directement
@@ -25,8 +27,20 @@ const CartController = {
         //     type: QueryTypes.SELECT,
         //   }
         // );
-
-        res.status(200).json(products);
+        let newProds = [];
+        for (const prod of products) {
+            newProds = prods.map(p => {
+                if (p.id === prod.id) {
+                    p.dataValues.qty = prod.qty;
+                    p.dataValues.quantity = prod.quantity;
+                }
+                return p;
+            });
+        }
+        res.status(200).json(newProds);
+    },
+    async store(req, res) {
+        //
     },
 };
 

@@ -57,6 +57,7 @@
 <script>
 import requests from '@/mixins/requests.js';
 import helpers from '@/mixins/helpers.js';
+import { useCartStore } from '@/stores/cart';
 
 export default {
     mixins: [requests, helpers],
@@ -64,13 +65,13 @@ export default {
     data() {
         return {
             product: {},
-            quantity: Number,
+            quantity: 1,
         };
     },
 
     methods: {
         handleSelectChange(event) {
-            this.quantity = event.target.value;
+            this.quantity = Number(event.target.value);
         },
 
         async handleClick(e) {
@@ -78,18 +79,19 @@ export default {
 
             const prod = {
                 quantity: this.quantity,
-                product: this.product.title,
+                id: this.product.id,
             };
-
-            try {
-                await fetch(`${this.server_url}/cart/add`, {
-                    method: 'POST',
-                    headers: this.headers,
-                    body: JSON.stringify(prod),
-                });
-            } catch (error) {
-                console.error(error);
-            }
+            const cartStore = useCartStore();
+            await cartStore.addOrUpdate(prod);
+            // try {
+            //     await fetch(`${this.server_url}/cart/add`, {
+            //         method: 'POST',
+            //         headers: this.headers,
+            //         body: JSON.stringify(prod),
+            //     });
+            // } catch (error) {
+            //     console.error(error);
+            // }
         },
         async getProduct() {
             const res = await fetch(
@@ -102,15 +104,8 @@ export default {
         },
     },
 
-    beforeMount() {
-        console.log('TEST');
-        console.log(this.$route);
-    },
-
     mounted() {
         this.getProduct().then(null);
     },
 };
 </script>
-
-<style scoped></style>

@@ -41,10 +41,18 @@
                                 Remove
                             </button>
                         </div>
-                        <div></div>
-                        <div
-                            v-text="`${this.formatPrice(product.priceHT)} TTC`"
-                        ></div>
+
+                        <div>
+                            <p>
+                                <strong
+                                    >{{
+                                        this.formatPrice(product.priceHT)
+                                    }}
+                                    TTC</strong
+                                >
+                            </p>
+                            <small> Quantité : {{ product.qty }} </small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,6 +110,7 @@
 <script>
 import helpers from '@/mixins/helpers.js';
 import config from '@/mixins/config.js';
+import { useCartStore } from '@/stores/cart';
 import axios from 'axios';
 
 export default {
@@ -122,40 +131,40 @@ export default {
         },
 
         async getProducts() {
-            // Si on a des ids de produits en localStorage ...
-            const ids = [1];
-            axios
-                .post(`${this.dev_server_url}/cart`, { ids: ids })
-                .then(res => {
-                    this.products = res.data;
-                    let HT = 0;
+            // Si on a des produits en localStorage ...
+            const cart = useCartStore();
+            const ids = cart.products.map(prod => prod.id);
 
-                    this.products.forEach(item => {
-                        // Si on a une quantité, il faudra ajouter '* item.qty' au calcul
-                        // item.qty = 2;
+            if (ids) {
+                axios
+                    .post(`${this.dev_server_url}/cart`, {
+                        products: cart.products,
+                    })
+                    .then(res => {
+                        this.products = res.data;
 
-                        HT += Number(item.priceHT);
-                    });
+                        const totalHT = this.products.reduce(
+                            (acc, prod) =>
+                                (acc +=
+                                    Number(prod.priceHT) *
+                                    Number(prod.qty ?? 1)),
+                            0
+                        );
 
-                    const totalHT = this.products.reduce(
-                        (acc, prod) =>
-                            (acc +=
-                                Number(prod.priceHT) * Number(prod.qty ?? 1)),
-                        0
-                    );
+                        this.totalHT = this.convertToEuro(totalHT);
 
-                    this.totalHT = this.convertToEuro(totalHT);
+                        this.taxAmount = Intl.NumberFormat('fr-fr', {
+                            style: 'currency',
+                            currency: 'EUR',
+                        }).format(
+                            this.addTva(this.totalHT) -
+                                this.convertToEuro(totalHT)
+                        );
 
-                    this.taxAmount = Intl.NumberFormat('fr-fr', {
-                        style: 'currency',
-                        currency: 'EUR',
-                    }).format(
-                        this.addTva(this.totalHT) - this.convertToEuro(totalHT)
-                    );
-
-                    this.totalTTC = this.formatPrice(HT);
-                })
-                .catch(e => console.error(e));
+                        this.totalTTC = this.formatPrice(totalHT);
+                    })
+                    .catch(e => console.error(e));
+            }
         },
     },
 
