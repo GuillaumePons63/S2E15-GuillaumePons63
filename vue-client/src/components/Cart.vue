@@ -43,11 +43,7 @@
                         </div>
                         <div></div>
                         <div
-                            v-text="
-                                `${this.formatPrice(
-                                    product.priceHT
-                                )} &euro; TTC`
-                            "
+                            v-text="`${this.formatPrice(product.priceHT)} TTC`"
                         ></div>
                     </div>
                 </div>
@@ -76,12 +72,12 @@
                         <span class="cart-totals-total"> Total </span>
                     </div>
                     <div class="cart-totals-subtotal">
-                        totalHT &euro;
+                        {{ totalHT }}&euro;
                         <br />
-                        {{ (totalTTC - totalHT).toFixed(2) }} &euro;
+                        {{ taxAmount }}
                         <br />
                         <span class="cart-totals-total">
-                            totalTTC {{ totalTTC }} &euro;
+                            {{ totalTTC }}
                         </span>
                     </div>
                 </div>
@@ -117,6 +113,7 @@ export default {
             count: 0,
             totalHT: 0,
             totalTTC: 0,
+            taxAmount: 0,
         };
     },
     methods: {
@@ -134,14 +131,29 @@ export default {
                     let HT = 0;
 
                     this.products.forEach(item => {
-                        // Si on a une quantité, il faudra ajouter * qty au calcul
-                        item.qty = 2;
+                        // Si on a une quantité, il faudra ajouter '* item.qty' au calcul
+                        // item.qty = 2;
 
-                        HT += Number(item.priceHT * item.qty);
-
-                        this.totalHT = this.convertToEuro(HT);
-                        this.totalTTC = this.formatPrice(HT);
+                        HT += Number(item.priceHT);
                     });
+
+                    const totalHT = this.products.reduce(
+                        (acc, prod) =>
+                            (acc +=
+                                Number(prod.priceHT) * Number(prod.qty ?? 1)),
+                        0
+                    );
+
+                    this.totalHT = this.convertToEuro(totalHT);
+
+                    this.taxAmount = Intl.NumberFormat('fr-fr', {
+                        style: 'currency',
+                        currency: 'EUR',
+                    }).format(
+                        this.addTva(this.totalHT) - this.convertToEuro(totalHT)
+                    );
+
+                    this.totalTTC = this.formatPrice(HT);
                 })
                 .catch(e => console.error(e));
         },

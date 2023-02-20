@@ -45,7 +45,9 @@
                     <RouterLink :to="`/product/${product.id}`">
                         <div class="product-name">{{ product.title }}</div>
                     </RouterLink>
-                    <div class="product-price">{{ product.priceHT }}</div>
+                    <div class="product-price">
+                        {{ this.formatPrice(product.priceHT) }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,10 +55,11 @@
 </template>
 
 <script>
+import helpers from '@/mixins/helpers.js';
 import requests from '@/mixins/requests.js';
 
 export default {
-    mixins: [requests],
+    mixins: [requests, helpers],
     mounted() {
         this.getProducts().then(null);
         this.getCategories().then(null);
