@@ -321,10 +321,11 @@ ALTER SEQUENCE public.roles_id_seq OWNED BY public.roles.id;
 
 CREATE TABLE public.users (
     id integer NOT NULL,
+    github_id integer NULL,
     name character varying(255),
-    email character varying(255) NOT NULL,
+    email character varying(255) NULL,
     avatar text,
-    password character varying(255) NOT NULL,
+    password character varying(255) NULL,
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone NOT NULL
 );

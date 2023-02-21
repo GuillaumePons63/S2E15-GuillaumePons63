@@ -1,0 +1,2 @@
+- [ ] Un dump de la BDD
+- [ ] Automatisé la création de la BDD

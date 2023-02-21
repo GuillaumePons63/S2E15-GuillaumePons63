@@ -54,6 +54,24 @@ export const useAuthStore = defineStore('auth', {
                     }
                 });
         },
+
+        async loginWithGithub(email, password) {
+            axios
+                .post(`${registerUrl}/auth/github`, {
+                    email,
+                    password,
+                })
+                .then(res => {
+                    console.log(res.data);
+                })
+                .catch(e => {
+                    for (let prop in e) {
+                        // TODO: avoir des fichiers nommés comme les codes d'erreurs et faire des redirections
+                        console.log(prop, e[prop]);
+                    }
+                });
+        },
+
         logout() {
             this.user = null;
             localStorage.removeItem('user');

@@ -3,8 +3,11 @@ const express = require('express');
 const app = express();
 const { param } = require('express-validator');
 const cors = require('cors');
+const session = require('express-session');
+const passport = require('passport');
 const errorHandlers = require('./handlers/ErrorHandlers');
 
+const useGithubAuth = require('./auth/github');
 const usersRoutes = require('./routes/api/users');
 const authRoutes = require('./routes/api/auth');
 const categoriesRoutes = require('./routes/api/categories');
@@ -20,6 +23,17 @@ const port = process.env.PORT || 5000;
 //* Cors doivent paramétrés pour n'autoriser que quelques app,
 //* sauf si vous faites une API  public
 app.use(cors('*'));
+
+//   and deserialized.
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function (obj, done) {
+    done(null, obj);
+});
+
+useGithubAuth();
 app.use(express.json({ limit: '5mb', extended: false }));
 
 app.get('/', (req, res) => res.send('API running'));
@@ -36,6 +50,12 @@ app.get(
         );
     }
 );
+
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
+// Initialize Passport!  Also use passport.session() middleware, to support
+// persistent login sessions (recommended).
+app.use(passport.initialize());
+app.use(passport.session());
 
 //
 app.use('/api/auth', authRoutes);

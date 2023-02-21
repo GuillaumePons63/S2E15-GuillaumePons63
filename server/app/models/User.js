@@ -19,6 +19,10 @@ class User extends Model {
 
 User.init(
     {
+        github_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -26,7 +30,7 @@ User.init(
         },
         email: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             unicode: true,
             unique: true,
         },
@@ -36,7 +40,7 @@ User.init(
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
     },
     {

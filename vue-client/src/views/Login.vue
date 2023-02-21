@@ -28,6 +28,12 @@
             <button type="submit">Envoyer</button>
         </form>
     </div>
+
+    <div class="container mt-5 mb-5">
+        <a class="btn btn-success" href="http://localhost:5000/api/auth/github"
+            >Login with github</a
+        >
+    </div>
 </template>
 
 <script setup>
@@ -40,5 +46,23 @@ async function onSubmit(e) {
     const password = e.target.querySelector('input[name=password]').value;
 
     await authStore.login(email, password);
+    // await authStore.loginWithGithub(email, password);
 }
 </script>
+
+<style scoped>
+.btn {
+    border: solid 1px #6e6d6d;
+    padding: 1em;
+    display: inline-block;
+}
+.btn-success {
+    background-color: #0bad93;
+}
+.mt-5 {
+    margin-top: 1em;
+}
+.mb-5 {
+    margin-bottom: 1em;
+}
+</style>

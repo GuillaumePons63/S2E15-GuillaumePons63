@@ -56,6 +56,12 @@ const AuthController = {
             }
         );
     },
+
+    async loginWithGithub(req, res) {
+        console.log(req.user);
+
+        res.json({ user: req.user });
+    },
 };
 
 module.exports = AuthController;
