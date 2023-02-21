@@ -1,2 +1,5 @@
-- [ ] Un dump de la BDD
-- [ ] Automatisé la création de la BDD
+- [ ] Refaire le model User, pour supporter plusieurs auth
+- [ ] Un dump 'frais' de la BDD pour automatiser la création de la BDD
+- [ ] Terminé login with GitHub
+- [ ] Pouvoir créer un user en local et avec github, le process doit être transparent peu importe la méthode choisie par les users
+- [ ] Créer un challenge avec passportjs, voir si auth avec SMS possible gratuitement avec twilio

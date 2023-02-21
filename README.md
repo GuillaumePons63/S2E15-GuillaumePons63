@@ -3,6 +3,8 @@
 ---
 ## WIP
 
+> **_Auth V2_**
+> 
 > **_En cours d'ajout de passportjs_**
 ---
 
