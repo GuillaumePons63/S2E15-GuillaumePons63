@@ -23,7 +23,6 @@ Après avoir cloné le repo :
 > 
 > Il faut register un utilisateur avant.
 
-### Changer les URL dans les configs
+### TODO
 
--   pour profiter du proxy
 -   Mettre en place un PubSub avec Redis
