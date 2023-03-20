@@ -30,7 +30,7 @@ router.post(
     '/create',
     [
         auth,
-        authorize('create-product'),
+        authorize(['create-product', 'all']),
         upload.single('image'),
         function (req, res, next) {
             const errors = validationResult(req);

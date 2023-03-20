@@ -1,6 +1,6 @@
 <template>
-    <section class="mt-5 mb-5">
-        <div class="row">
+    <section class="row">
+        <div class="mb-5 col-md-8">
             <h1 class="text-primary">
                 <i class="fas fa-user" /> Créez un produit
             </h1>
@@ -10,7 +10,7 @@
                 class="form"
                 @submit.prevent="createProduct"
             >
-                <div class="col-md-4 mb-2">
+                <div class="col-md-6 mb-2">
                     <label for="metaDescription" class="form-label">
                         Catégories du produit
                     </label>
@@ -31,11 +31,11 @@
                         </option>
                     </select>
                 </div>
-                <div class="col-md-8 mb-2">
+                <div class="col-md-6 mb-2">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div>
                             <label for="image" class="form-label">
-                                Image principal du produit
+                                Image principal du produit (1MB max)
                             </label>
                             <input
                                 type="file"
@@ -44,8 +44,6 @@
                                 id="image"
                                 @change="loadImage"
                             />
-                        </div>
-                        <div class="col-md-2">
                             <img
                                 :src="product.image"
                                 alt="Représentation du produit"
@@ -53,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="input-group input-group-sm mb-2">
                         <input
                             type="text"
@@ -83,7 +81,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <label for="body" class="form-label"> Contenu </label>
                     <Wysiwyg
                         placeholder="description"
@@ -99,12 +97,47 @@
                 />
             </form>
         </div>
+        <div class="col-md-3">
+            <h2 class="text-center">Products</h2>
+            <hr />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Catégorie</th>
+                        <th>Mettre à jour</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="product in products">
+                        <td v-text="product.title"></td>
+                        <td>
+                            <button
+                                type="button"
+                                class="btn btn-danger btn-sm mx-3"
+                            >
+                                Supprimer
+                            </button>
+                        </td>
+                        <td>
+                            <button
+                                type="button"
+                                class="btn btn-primary btn-sm mx-3"
+                            >
+                                Update
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 </template>
 
 <script>
 import Wysiwyg from '@/components/dashboard/Wysiwyg.vue';
 import requests from '@/mixins/requests.js';
+import { axios } from '@/mixins/axios';
 
 export default {
     mixins: [requests],
@@ -144,17 +177,12 @@ export default {
         },
         async createProduct() {
             try {
-                const response = await fetch(
+                const response = await axios.post(
                     `${this.server_url}/products/create`,
-                    {
-                        method: 'POST',
-                        headers: this.headers,
-                        body: JSON.stringify(this.product),
-                    }
+                    this.product
                 );
-                const prods = await response.json();
 
-                this.products = prods;
+                this.products = await response.data.products;
                 this.product = this.initProd;
             } catch (e) {
                 console.error(e);
@@ -178,3 +206,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+img {
+    max-width: 100%;
+}
+</style>

@@ -3,13 +3,14 @@ import DashboardView from '@/views/DashboardView.vue';
 import CreateProductView from '@/views/CreateProductView.vue';
 import CreateCategoryView from '@/views/CreateCategoryView.vue';
 import RoleView from '@/views/RoleView.vue';
+import RoleDetail from '@/views/RoleDetail.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import { useAuthStore } from '@/stores/auth.js';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
-    linkActiveClass: '',
+    linkActiveClass: 'active',
     linkExactActiveClass: 'active',
     routes: [
         {
@@ -21,6 +22,11 @@ const router = createRouter({
                     path: '/dashboard/roles',
                     name: 'roles',
                     component: RoleView,
+                },
+                {
+                    path: '/dashboard/roles/:id',
+                    name: 'roleDetail',
+                    component: RoleDetail,
                 },
                 {
                     path: '/dashboard/products',

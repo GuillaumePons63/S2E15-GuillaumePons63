@@ -17,7 +17,7 @@ services:
             POSTGRES_USER: student
         volumes:
             - ./pgsql:/var/lib/postgresql/data
-            - ./schema.sql:/docker-entrypoint-initdb.d/create_tables.sql
+            - ./schema2.sql:/docker-entrypoint-initdb.d/create_tables.sql
         networks:
             - nodejs
 
@@ -74,7 +74,7 @@ services:
             APP_SECRET: secrettoken
             EMPLOYEE: employee
             CUSTOMER: customer
-            ADMIN: admin
+            ADMIN: owner
         working_dir: /var/www/html/postgres
         entrypoint: ['npm', 'run', 'dev', '--host', '0.0.0.0']
         depends_on:
@@ -103,23 +103,15 @@ services:
         networks:
             - nodejs
 
-    php:
-        build:
-            context: .
-            dockerfile: php.dockerfile
-        volumes:
-            - ./src:/var/www/html
-        networks:
-            - nodejs
-
     adminer:
         build:
             context: .
             dockerfile: adminer.dockerfile
         ports:
             - '8080:8080'
+        expose:
+            - '8080'
         depends_on:
             - pgsql
-            - php
         networks:
             - nodejs

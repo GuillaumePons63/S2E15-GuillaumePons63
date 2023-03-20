@@ -76,7 +76,7 @@ export default {
                 { name: this.category }
             );
 
-            this.categories = res.data;
+            this.categories = res.data.categories;
 
             this.category = '';
         },

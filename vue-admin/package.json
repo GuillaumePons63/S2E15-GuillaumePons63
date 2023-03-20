@@ -18,5 +18,34 @@
     "devDependencies": {
         "@vitejs/plugin-vue": "^3.0.3",
         "vite": "^3.0.9"
+    },
+    "prettier": {
+        "printWidth": 80,
+        "tabWidth": 4,
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false,
+        "overrides": [
+            {
+                "files": "*.js",
+                "options": {
+                    "parser": "babel"
+                }
+            },
+            {
+                "files": "*.json",
+                "options": {
+                    "parser": "json",
+                    "tabWidth": 4
+                }
+            }
+        ],
+        "semi": true,
+        "requirePragma": false,
+        "proseWrap": "preserve",
+        "arrowParens": "avoid",
+        "htmlWhitespaceSensitivity": "css",
+        "quoteProps": "as-needed"
     }
 }

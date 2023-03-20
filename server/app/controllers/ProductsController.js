@@ -2,18 +2,7 @@ const { Product, Category } = require('../models');
 
 const ProductsController = {
     async index(req, res) {
-        let offset = 0;
-        if (req.query.offset) {
-            offset = req.query.offset;
-        }
-
-        const products = await Product.findAll({
-            limit: 10,
-            offset: offset,
-            include: [
-                { model: Category, as: 'categories', attributes: ['id'] },
-            ],
-        });
+        const products = await ProductsController.getProducts();
 
         res.status(200).json(products);
     },
@@ -34,7 +23,7 @@ const ProductsController = {
             },
         });
 
-        const product = await Product.create({
+        await Product.create({
             category_id: cat.id,
             title: title,
             metaDescription: metaDescription,
@@ -43,7 +32,9 @@ const ProductsController = {
             description: description,
         });
 
-        res.status(200).json({ product, msg: 'Produit créé' });
+        const products = await ProductsController.getProducts();
+
+        res.status(201).json({ products, msg: 'Produit créé' });
     },
 
     async show(req, res) {
@@ -52,6 +43,16 @@ const ProductsController = {
         const product = await Product.findOne({ where: { id } });
 
         res.status(200).json(product);
+    },
+
+    async getProducts(offset = 0) {
+        return await Product.findAll({
+            limit: 10,
+            offset: offset,
+            include: [
+                { model: Category, as: 'categories', attributes: ['id'] },
+            ],
+        });
     },
 };
 

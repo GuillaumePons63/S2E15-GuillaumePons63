@@ -20,7 +20,7 @@ router.post(
     '/create',
     [
         auth,
-        authorize('create-category'),
+        authorize(['create-category', 'all']),
         [
             check('name', 'le nom est obligatoire').trim().escape(),
             function (req, res, next) {

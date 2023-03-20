@@ -30,7 +30,7 @@ const UsersController = {
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
 
-        // Attribuer un rôle par défaut ici
+        // Attribuer un rôle par défaut ici ?
 
         //$2a$10$eagneoIJBbU0.LDUlkaISONZybPrGuWF3ONQUcmvdIg5MBwiTZXPG;
         //$2a$10$VIniz81ck4h4yvmD.NpIReHgWLn8bG1Egw1K8AUGNyA5zzG69yg36;

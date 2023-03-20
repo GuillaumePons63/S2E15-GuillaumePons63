@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "scripts": {
         "watch": "concurrently \"npm run dev --prefix server\" \"npm start --prefix vue-client\" \"npm start --prefix vue-admin\"",
-        "install": "concurrently \"npm i --prefix server\" \"npm i --prefix vue-admin\" \"npm i --prefix vue-client\""
+        "install": "concurrently \"npm i --prefix server\" \"npm i --prefix vue-admin\" \"npm i --prefix vue-client\"",
+        "update": "concurrently \"npm update --prefix server\" \"npm update --prefix vue-client\" \"npm update --prefix vue-admin\"",
+        "audit": "concurrently \"npm audit --fix --prefix server\" \"npm audit --fix --prefix vue-client\" \"npm audit --fix --prefix vue-admin\""
     },
     "devDependencies": {
         "concurrently": "^7.3.0"
