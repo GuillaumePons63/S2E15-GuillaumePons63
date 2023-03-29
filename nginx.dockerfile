@@ -17,3 +17,4 @@ COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 # sed (stream editor) est un outil de modification de texte
 # !! nginx attention aux deux espaces
 RUN sed -i "s/user  nginx/user  ${NGINXUSER}/g" /etc/nginx/nginx.conf
+

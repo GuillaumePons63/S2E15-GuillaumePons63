@@ -8,9 +8,13 @@ async function isAdmin(req, res, next) {
         include: { all: true, nested: true },
     });
 
+    console.log('user', user.dataValues.hasOwnProperty('roles'));
     let role = null;
-    if (user.hasOwnProperty('roles')) {
-        role = user.roles.find(role => role.name === process.env.ADMIN);
+
+    if (user.dataValues.hasOwnProperty('roles')) {
+        role = user.dataValues.roles.find(
+            role => role.name === process.env.ADMIN
+        );
     }
 
     if (role) {

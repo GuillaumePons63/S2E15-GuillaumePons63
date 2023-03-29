@@ -1,22 +1,40 @@
 const { Role } = require('../models');
-
 const RolesController = {
     async index(req, res) {
-        const roles = await Role.findAll({
-            attributes: { exclude: ['createdAt', 'updatedAt'] },
-        });
+        const roles = await RolesController.getRoles();
 
         res.status(200).json(roles);
     },
 
     async store(req, res) {
-        const { name } = req.body;
+        const { name, label } = req.body;
 
-        const role = await Role.create({
+        await Role.create({
             name: name,
+            label: label,
         });
 
-        res.status(200).json({ role, msg: 'Role créé' });
+        const roles = await RolesController.getRoles();
+
+        res.status(201).json({ roles, msg: 'Role créé' });
+    },
+
+    async show(req, res) {
+        const { id } = req.params;
+
+        const role = await Role.findByPk(id, {
+            include: 'permissions',
+            attributes: { exclude: ['created_at', 'updated_at'] },
+        });
+
+        res.status(200).json(role);
+    },
+
+    async getRoles() {
+        return await Role.findAll({
+            include: 'permissions',
+            attributes: { exclude: ['created_at', 'updated_at'] },
+        });
     },
 };
 

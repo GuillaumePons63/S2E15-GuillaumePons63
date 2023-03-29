@@ -6,7 +6,7 @@ class User extends Model {
         let ok = false;
 
         this['roles'].forEach(role => {
-            role['abilities'].forEach(ability => {
+            role['permissions'].forEach(ability => {
                 if (ability.name === action) {
                     ok = true;
                 }

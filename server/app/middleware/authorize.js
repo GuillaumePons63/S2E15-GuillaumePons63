@@ -1,6 +1,11 @@
 const { User } = require('../models');
 
-function authorize(action) {
+/**
+ *
+ * @param {array} action
+ * @returns next
+ */
+function authorize(actions) {
     return async (req, res, next) => {
         const { id } = req.user;
 
@@ -8,8 +13,10 @@ function authorize(action) {
             include: { all: true, nested: true },
         });
 
-        if (user.can(action)) {
-            return next();
+        for (const action of actions) {
+            if (user.can(action)) {
+                return next();
+            }
         }
 
         const error = new Error("Un truc bizarre s'est produit");

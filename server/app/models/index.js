@@ -16,12 +16,17 @@ Ability.belongsToMany(Role, {
 });
 
 Role.belongsToMany(Ability, {
-    as: 'abilities',
+    as: 'permissions',
     through: AbilityRole,
 });
 
 User.belongsToMany(Role, {
     as: 'roles',
+    through: RoleUser,
+});
+
+Role.belongsToMany(User, {
+    as: 'users',
     through: RoleUser,
 });
 

@@ -8,9 +8,18 @@ const auth = require('../../app/middleware/auth.js');
 const isAdmin = require('../../app/middleware/isAdmin');
 const authorize = require('../../app/middleware/authorize');
 /**
- * @route POST api/roles
+ * @route GET api/roles
  */
 router.get('/', auth, isAdmin, catchErrors(RolesController.index));
+
+router.get(
+    '/:id',
+    [
+        auth,
+        authorize(['view-roles', 'all'])
+    ],
+    catchErrors(RolesController.show)
+);
 
 /**
  *
@@ -22,7 +31,7 @@ router.post(
     '/create',
     [
         auth,
-        authorize('create-role'),
+        authorize(['create-role', 'all']),
         [
             check('name', 'le nom est obligatoire')
                 .not()
