@@ -10,14 +10,16 @@ Après avoir cloné le repo :
 
 -   `npm i && npm run install`
 -   `docker compose up --build`
--   renommer le fichier `/server/.env.example` en `/server/.env` (pas besoin avec docker )
+-   renommer le fichier `/server/.env.example` en `/server/.env` (pas besoin avec docker)
 
 -   Si besoin, il y a aussi les scripts `npm run update` et `npm run audit`.
 
 ### BDD
 
-> user : student , mdp : secret, bdd : shopping (adminer)
-
+> Se connecter à adminer avec les infos suivantes [http://localhost:8080](http://localhost:8080) quand on utilise docker
+>
+> user : student , mdp : secret, bdd : shopping
+>
 > Il y a plusieurs users dans la BDD, avec un mot de passe unique : secret
 
 1. email : admin@oclock.io , mdp : secret (role owner, abilities : all)
@@ -47,3 +49,5 @@ Après avoir cloné le repo :
 
 Passport est installé et initialisé dans `server.js`.
 Sur la page login, un bouton `login with github` est présent, il nous guide jusqu'au `AuthController`, ça servira juste à présenter passport et à montrer qu'il faut configurer github pour autorisé une app à se connecter via github.
+
+fichier concerné : `server.js`, `routes/api/auth?js`, `AuthController@loginWithGithub` (méthode qui ne fait rien :) )
