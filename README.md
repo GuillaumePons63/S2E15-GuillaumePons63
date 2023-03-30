@@ -2,14 +2,6 @@
 
 ---
 
-## WIP
-
-> **_Auth V2_**
->
-> **_En cours d'ajout de passportjs pour parler d'Oauth_**
-
----
-
 ## Installation
 
 Après avoir cloné le repo :
@@ -27,6 +19,9 @@ Après avoir cloné le repo :
 > user : student , mdp : secret, bdd : shopping (adminer)
 
 > Il y a plusieurs users dans la BDD, avec un mot de passe unique : secret
+
+1. email : admin@oclock.io , mdp : secret (role owner, abilities : all)
+2. email : compable@oclock.io , mdp : secret (pas de roles attribué)
 
 > Pour les utilisateurs de l'app, il y a plusieurs rôles et permissions :
 
@@ -48,6 +43,7 @@ Après avoir cloné le repo :
     -   `update-product`
     -   `delete-product`
 
-### TODO
+### Passport
 
--   Mettre en place un PubSub avec Redis
+Passport est installé et initialisé dans `server.js`.
+Sur la page login, un bouton `login with github` est présent, il nous guide jusqu'au `AuthController`, ça servira juste à présenter passport et à montrer qu'il faut configurer github pour autorisé une app à se connecter via github.

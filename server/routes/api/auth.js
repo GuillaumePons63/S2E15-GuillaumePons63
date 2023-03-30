@@ -6,13 +6,19 @@ const auth = require('../../app/middleware/auth.js');
 const AuthController = require('../../app/controllers/AuthController');
 const validateEmailAndPassword = require('../../app/middleware/validateEmailAndPassword');
 
-// @route get api/auth
+/**
+ * @route get api/auth
+ */
 router.get('/', auth, catchErrors(AuthController.index));
 
-// @route post api/auth : login
+/**
+ * @route post api/auth : login
+ */
 router.post('/', validateEmailAndPassword, catchErrors(AuthController.login));
 
-// @route post api/auth/github : login with github
+/**
+ * @route post api/auth/github : login with github
+ */
 router.get(
     '/github',
 
@@ -20,7 +26,9 @@ router.get(
     catchErrors(AuthController.loginWithGithub)
 );
 
-// @route post api/auth/github/callback : login with github
+/**
+ * @route post api/auth/github/callback : login with github route appelée quand github a répondu
+ */
 router.get(
     '/github/callback',
     passport.authenticate('github', {
@@ -28,4 +36,5 @@ router.get(
     }),
     AuthController.loginWithGithub
 );
+
 module.exports = router;

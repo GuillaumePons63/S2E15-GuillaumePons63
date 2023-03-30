@@ -24,16 +24,20 @@ const port = process.env.PORT || 5000;
 //* sauf si vous faites une API  public
 app.use(cors('*'));
 
-//   and deserialized.
+/**
+ * PASSPORT PLUGIN
+ */
 passport.serializeUser(function (user, done) {
     done(null, user);
 });
-
+//   and deserialized.
 passport.deserializeUser(function (obj, done) {
     done(null, obj);
 });
 
 useGithubAuth();
+/** FIN PASSPORT PLUGIN */
+
 app.use(express.json({ limit: '5mb', extended: false }));
 
 app.get('/', (req, res) => res.send('API running'));
@@ -51,12 +55,14 @@ app.get(
     }
 );
 
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
+/**
+ * passpport plugin
+ */
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
 app.use(passport.initialize());
 app.use(passport.session());
-
+/** fin passport plugin */
 //
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
