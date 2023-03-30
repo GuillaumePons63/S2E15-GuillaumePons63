@@ -11,8 +11,16 @@ function useGithubAuth() {
                 callbackURL: '/api/auth/github/callback',
             },
             async function (accessToken, refreshToken, profile, done) {
+                console.log(accessToken);
+                console.log(refreshToken);
                 const user = await User.findOrCreate({
-                    where: { github_id: profile.id },
+                    where: {
+                        github_id: profile.id,
+                    },
+                    defaults: {
+                        name: profile.username,
+                        avatar: profile._json.avatar_url,
+                    },
                 });
 
                 return done(null, user);

@@ -220,8 +220,8 @@ CREATE TABLE "public"."users" (
 
 TRUNCATE "users";
 INSERT INTO "users" ("id", "github_id", "name", "email", "avatar", "password", "created_at", "updated_at") VALUES
-(2,	NULL,	'Gontrand',	'comptable@oclock.io',	NULL,	'$2a$10$gR.NEywtEnEi/FRfn0EImenAEbodwM4ACbljVOTNVQtGkGlS9wYZK',	'2023-03-20 11:18:53.656+00',	'2023-03-20 11:18:53.656+00'),
-(1,	NULL,	'Laurent',	'admin@oclock.io',	NULL,	'$2a$10$gR.NEywtEnEi/FRfn0EImenAEbodwM4ACbljVOTNVQtGkGlS9wYZK',	'2023-03-20 11:07:02.284+00',	'2023-03-20 11:07:02.284+00');
+(1,	NULL,	'Laurent',	'admin@oclock.io',	NULL,	'$2a$10$gR.NEywtEnEi/FRfn0EImenAEbodwM4ACbljVOTNVQtGkGlS9wYZK',	'2023-03-20 11:07:02.284+00',	'2023-03-20 11:07:02.284+00'),
+(2,	NULL,	'Gontrand',	'comptable@oclock.io',	NULL,	'$2a$10$gR.NEywtEnEi/FRfn0EImenAEbodwM4ACbljVOTNVQtGkGlS9wYZK',	'2023-03-20 11:18:53.656+00',	'2023-03-20 11:18:53.656+00');
 
 ALTER TABLE ONLY "public"."ability_role" ADD CONSTRAINT "ability_role_ability_id_fkey" FOREIGN KEY (ability_id) REFERENCES abilities(id) ON UPDATE CASCADE ON DELETE CASCADE NOT DEFERRABLE;
 ALTER TABLE ONLY "public"."ability_role" ADD CONSTRAINT "ability_role_role_id_fkey" FOREIGN KEY (role_id) REFERENCES roles(id) ON UPDATE CASCADE ON DELETE CASCADE NOT DEFERRABLE;
@@ -234,4 +234,5 @@ ALTER TABLE ONLY "public"."orders" ADD CONSTRAINT "orders_user_id_fkey" FOREIGN 
 ALTER TABLE ONLY "public"."role_user" ADD CONSTRAINT "role_user_role_id_fkey" FOREIGN KEY (role_id) REFERENCES roles(id) ON UPDATE CASCADE ON DELETE CASCADE NOT DEFERRABLE;
 ALTER TABLE ONLY "public"."role_user" ADD CONSTRAINT "role_user_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE NOT DEFERRABLE;
 
+ALTER SEQUENCE users_id_seq RESTART WITH 3
 -- 2023-03-20 15:35:49.752533+00

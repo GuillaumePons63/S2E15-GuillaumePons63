@@ -34,7 +34,7 @@ router.get(
     passport.authenticate('github', {
         failureRedirect: 'http://localhost:5173/login',
     }),
-    AuthController.loginWithGithub
+    catchErrors(AuthController.loginWithGithub)
 );
 
 module.exports = router;

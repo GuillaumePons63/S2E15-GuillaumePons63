@@ -48,6 +48,8 @@ Après avoir cloné le repo :
 ### Passport
 
 Passport est installé et initialisé dans `server.js`.
-Sur la page login, un bouton `login with github` est présent, il nous guide jusqu'au `AuthController`, ça servira juste à présenter passport et à montrer qu'il faut configurer github pour autorisé une app à se connecter via github.
 
-fichier concerné : `server.js`, `routes/api/auth?js`, `AuthController@loginWithGithub` (méthode qui ne fait rien :) )
+Sur la page login, un bouton `login with github` est présent, au clique on se login avec l'API github et ça créé un User dans notre BDD. On ne fait rien avec le token que github renvoie.
+la route va jusqu'au `AuthController`, tout ça ne sert qu'à présenter passport et à montrer qu'il faut configurer github pour autoriser une app à se connecter via github.
+
+fichiers concernés : `server.js`, `routes/api/auth.js`, `auth/github.js`, `AuthController@loginWithGithub` (méthode qui ne fait rien d'autre qu'afficher un json  :) )
