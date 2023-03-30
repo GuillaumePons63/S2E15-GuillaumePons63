@@ -55,6 +55,7 @@ app.get(
     }
 );
 
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
 /**
  * passpport plugin
  */
