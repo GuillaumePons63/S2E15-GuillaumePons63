@@ -34,7 +34,11 @@ Product.init(
             type: DataTypes.STRING,
             allowNull: true,
         },
-        priceHT: {
+        price_ht: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        vat_category_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },

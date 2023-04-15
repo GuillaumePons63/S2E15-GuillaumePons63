@@ -9,6 +9,8 @@ const Ability = require('./Ability');
 const RoleUser = require('./RoleUser');
 const AbilityRole = require('./AbilityRole');
 const Coupon = require('./Coupon');
+const OrderItem = require('./OrderItem');
+const VatCategory = require('./VatCategory');
 
 Ability.belongsToMany(Role, {
     as: 'roles',
@@ -40,6 +42,26 @@ Product.belongsToMany(Category, {
     through: CategoryProduct,
 });
 
+Order.belongsToMany(Product, {
+    as: 'items',
+    through: OrderItem,
+    foreignKey: 'order_id',
+});
+
+OrderItem.belongsTo(Order, {
+    as: 'order',
+});
+
+Product.belongsTo(VatCategory, {
+    as: 'vat_rate',
+    foreignKey: 'vat_category_id',
+});
+
+VatCategory.hasMany(Product, {
+    as: 'products',
+    foreignKey: 'vat_category_id',
+});
+
 module.exports = {
     Ability,
     AbilityRole,
@@ -51,4 +73,6 @@ module.exports = {
     Role,
     User,
     Coupon,
+    OrderItem,
+    VatCategory,
 };

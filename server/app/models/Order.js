@@ -6,16 +6,13 @@ class Order extends Model {}
 
 Order.init(
     {
-        items: {
-            type: DataTypes.JSON,
-        },
         priceHT: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
         priceTTC: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
         user_id: {
             type: DataTypes.INTEGER,

@@ -12,6 +12,8 @@ const CategoryProduct = require('./app/models/CategoryProduct');
 const Role = require('./app/models/Role');
 const User = require('./app/models/User');
 const Coupon = require('./app/models/Coupon');
+const OrderItem = require('./app/models/OrderItem');
+const VatCategory = require('./app/models/VatCategory');
 
 router.get('/install', async (req, res) => {
     try {
@@ -62,13 +64,15 @@ router.get('/install', async (req, res) => {
             await User.sync();
             await Ability.sync();
             await Category.sync();
-            await Product.sync();
+            await VatCategory.sync();
             await Order.sync();
+            await Product.sync();
             await Role.sync();
             await AbilityRole.sync();
             await RoleUser.sync();
             await CategoryProduct.sync();
             await Coupon.sync();
+            await OrderItem.sync();
             // const resolved = await Promise.race(promises);
             // console.log(resolved);
             const roles = [
