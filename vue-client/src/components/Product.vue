@@ -25,7 +25,7 @@
                 15 inch, 1TB SSD, 32GB RAM
             </div>
             <div class="product-section-price">
-                {{ formatPrice(product.priceHT) }} €
+                {{ formatPrice(product.price_ht) }}
             </div>
 
             <div v-html="product.description"></div>
@@ -74,14 +74,15 @@ export default {
             this.quantity = Number(event.target.value);
         },
 
-        async handleClick(e) {
-            e.preventDefault();
+        async handleClick() {
+
 
             const prod = {
                 quantity: this.quantity,
                 id: this.product.id,
             };
             const cartStore = useCartStore();
+
             await cartStore.addOrUpdate(prod);
             // try {
             //     await fetch(`${this.server_url}/cart/add`, {

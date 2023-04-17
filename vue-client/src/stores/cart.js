@@ -7,22 +7,35 @@ export const useCartStore = defineStore('cart', {
         };
     },
 
+    /**
+     * * TODO : régler les quantités
+     */
     actions: {
         async addOrUpdate(product) {
             if (this.products.length > 0) {
-                const item = this.products.find(item => item.id === product.id);
-                if (item && product.quantity) {
-                    item.qty = product.quantity;
-                    item.quantity = product.quantity;
-                    const newCart = this.products.map(p =>
-                        p.id === item.id ? item : p
-                    );
-
-                    localStorage.setItem('cart', JSON.stringify(newCart));
-                }
+                this.updateProduct(product);
             } else {
-                this.products.push(product);
-                localStorage.setItem('cart', JSON.stringify(this.products));
+                this.addProduct(product);
+            }
+        },
+        addProduct(product) {
+            product.qty = 1;
+            this.products.push(product);
+            localStorage.setItem('cart', JSON.stringify(this.products));
+        },
+        updateProduct(product) {
+            const item = this.products.find(item => item.id === product.id);
+
+            if (item && product.quantity) {
+                item.qty = product.quantity;
+                item.quantity = product.quantity;
+                const newCart = this.products.map(p =>
+                    p.id === item.id ? item : p
+                );
+
+                localStorage.setItem('cart', JSON.stringify(newCart));
+            } else {
+                this.addProduct(product);
             }
         },
     },

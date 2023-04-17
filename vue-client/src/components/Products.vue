@@ -46,7 +46,7 @@
                         <div class="product-name">{{ product.title }}</div>
                     </RouterLink>
                     <div class="product-price">
-                        {{ this.formatPrice(product.priceHT) }}
+                        {{ this.formatPrice(product.price_ht) }}
                     </div>
                 </div>
             </div>

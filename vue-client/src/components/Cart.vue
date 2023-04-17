@@ -46,7 +46,7 @@
                             <p>
                                 <strong
                                     >{{
-                                        this.formatPrice(product.priceHT)
+                                        this.formatPrice(product.price_ht)
                                     }}
                                     TTC</strong
                                 >
@@ -146,7 +146,7 @@ export default {
                         const totalHT = this.products.reduce(
                             (acc, prod) =>
                                 (acc +=
-                                    Number(prod.priceHT) *
+                                    Number(prod.price_ht) *
                                     Number(prod.qty ?? 1)),
                             0
                         );

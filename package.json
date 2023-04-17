@@ -8,7 +8,8 @@
         "audit": "concurrently \"npm audit --fix --prefix server\" \"npm audit --fix --prefix vue-client\" \"npm audit --fix --prefix vue-admin\""
     },
     "devDependencies": {
-        "concurrently": "^7.3.0"
+        "concurrently": "^7.3.0",
+        "prettier": "2.8.7"
     },
     "prettier": {
         "printWidth": 80,
@@ -16,7 +17,6 @@
         "singleQuote": true,
         "trailingComma": "es5",
         "bracketSpacing": true,
-        "jsxBracketSameLine": false,
         "overrides": [
             {
                 "files": "*.js",

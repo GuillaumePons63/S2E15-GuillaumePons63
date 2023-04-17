@@ -75,6 +75,80 @@ router.get('/install', async (req, res) => {
             await OrderItem.sync();
             // const resolved = await Promise.race(promises);
             // console.log(resolved);
+
+            // - ajouter des produits avec TVA
+            // - ajouter des différentes TVA (France)
+            let vatCategories = [
+                { name: 'Standard rate', vat_rate: 20.0 },
+                { name: 'Intermediate rate', vat_rate: 10.0 },
+                { name: 'Reduced rate', vat_rate: 5.5 },
+                { name: 'Super-reduced rate', vat_rate: 2.1 },
+            ];
+
+            for (const c of vatCategories) {
+                await VatCategory.create(c);
+            }
+
+            const [standardVat, interVat, reducedVat, superreducedVat] =
+                await VatCategory.findAll();
+
+            let categories = [
+                { name: 'Restauration' },
+                { name: 'Bâtiment' },
+                { name: 'Pharmacie' },
+                { name: 'Jeux Vidéos' },
+            ];
+
+            for (const c of categories) {
+                await Category.create(c);
+            }
+
+            let products = [
+                {
+                    title: 'PS5',
+                    description: 'Last generation game console',
+                    vat_category_id: standardVat.id,
+                    price_ht: 49999,
+                },
+                {
+                    title: 'Equipement travaux',
+                    description: 'Un outil pour les pros du bâtiment',
+                    vat_category_id: interVat.id,
+                    price_ht: 4999,
+                },
+                {
+                    title: 'Un repas',
+                    description: 'Un repas à emporter, sans boisson',
+                    vat_category_id: reducedVat.id,
+                    price_ht: 1499,
+                },
+                {
+                    title: 'Un médicament',
+                    description: 'Un médicament qui soigne des maladies',
+                    vat_category_id: superreducedVat.id,
+                    price_ht: 4575,
+                },
+            ];
+
+            for (const p of products) {
+                await Product.create(p);
+            }
+
+            const [restoCat, batimentCat, pharmacieCat, gamesCat] =
+                await Category.findAll();
+
+            const [videoGame, travaux, repas, medicine] =
+                await Product.findAll();
+
+            const promises = [
+                videoGame.addCategory(gamesCat),
+                travaux.addCategory(batimentCat),
+                repas.addCategory(restoCat),
+                medicine.addCategory(pharmacieCat),
+            ];
+
+            await Promise.all(promises);
+
             const roles = [
                 process.env.ADMIN,
                 process.env.EMPLOYEE,

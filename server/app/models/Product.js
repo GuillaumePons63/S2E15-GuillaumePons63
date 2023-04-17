@@ -16,11 +16,11 @@ Product.init(
         },
         image: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
         metaDescription: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         title: {
             type: DataTypes.STRING,

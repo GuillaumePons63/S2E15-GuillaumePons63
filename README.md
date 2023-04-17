@@ -2,6 +2,15 @@
 
 ---
 
+WIP : branche atelier j12
+
+quasi enoncé :
+  - Fonction SQL qui retourne le total TTC de la commande en se basant sur le taux de TVA d'un produit
+  - En fonction du type de produit, calculer des TVA différentes (4 taux en France) : challenge
+
+---
+
+
 ## Installation
 
 Après avoir cloné le repo :
