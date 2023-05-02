@@ -8,7 +8,7 @@
         "audit": "concurrently \"npm audit --fix --prefix server\" \"npm audit --fix --prefix vue-client\" \"npm audit --fix --prefix vue-admin\""
     },
     "devDependencies": {
-        "concurrently": "^7.3.0",
+        "concurrently": "^8.0.1",
         "prettier": "2.8.7"
     },
     "prettier": {

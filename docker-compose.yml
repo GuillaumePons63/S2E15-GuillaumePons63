@@ -91,7 +91,7 @@ services:
     nginx:
         build:
             context: .
-            dockerfile: nginx.dockerfile
+            dockerfile: ./docker-conf/nginx.dockerfile
         ports:
             - '80:80'
         expose:
@@ -106,7 +106,7 @@ services:
     adminer:
         build:
             context: .
-            dockerfile: adminer.dockerfile
+            dockerfile: ./docker-conf/adminer.dockerfile
         ports:
             - '8080:8080'
         expose:

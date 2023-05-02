@@ -1,14 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const getConnexion = require('./getConnexion');
 
-class OrderItem extends Model {
-    async calculateOrderPrice(orderId) {
-        const [result, metadata] = await sequelize.query(
-            `SELECT calculate_order_price(${orderId})`
-        );
-        return result[0].calculate_order_price;
-    }
-}
+class OrderItem extends Model {}
 OrderItem.init(
     {
         item_price: {
@@ -26,6 +19,12 @@ OrderItem.init(
         order_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            primaryKey: true,
+        },
+        product_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
         },
     },
     {

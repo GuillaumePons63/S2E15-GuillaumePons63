@@ -15,6 +15,7 @@ const productsRoutes = require('./routes/api/products');
 const couponsRoutes = require('./routes/api/coupons');
 const rolesRoutes = require('./routes/api/roles');
 const cartRoutes = require('./routes/api/cart');
+const orderRoutes = require('./routes/api/order');
 const installRoute = require('./install');
 
 const port = process.env.PORT || 5000;
@@ -72,6 +73,7 @@ app.use('/api/coupons', couponsRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/orders', orderRoutes);
 
 app.use(errorHandlers.notFound);
 

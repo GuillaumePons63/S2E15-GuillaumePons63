@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Sequelize = require('sequelize');
+const connexion = require('./app/models/getConnexion')();
 
 const Ability = require('./app/models/Ability');
 const AbilityRole = require('./app/models/AbilityRole');
@@ -73,11 +74,20 @@ router.get('/install', async (req, res) => {
             await CategoryProduct.sync();
             await Coupon.sync();
             await OrderItem.sync();
+
             // const resolved = await Promise.race(promises);
             // console.log(resolved);
 
+            await User.create({
+                name: 'Laurent',
+                email: 'laurent@oclock.io',
+                password:
+                    '$2y$10$J3W4Qy6Pj0XYmFg/.y/qGuQUfBo.OfVB697xQh0.mCNoYwZgcXvtG', // secret
+            });
+
             // - ajouter des produits avec TVA
             // - ajouter des différentes TVA (France)
+
             let vatCategories = [
                 { name: 'Standard rate', vat_rate: 20.0 },
                 { name: 'Intermediate rate', vat_rate: 10.0 },
@@ -109,24 +119,28 @@ router.get('/install', async (req, res) => {
                     description: 'Last generation game console',
                     vat_category_id: standardVat.id,
                     price_ht: 49999,
+                    image: 'https://picsum.photos/seed/1/300/200',
                 },
                 {
                     title: 'Equipement travaux',
                     description: 'Un outil pour les pros du bâtiment',
                     vat_category_id: interVat.id,
                     price_ht: 4999,
+                    image: 'https://picsum.photos/seed/2/300/200',
                 },
                 {
                     title: 'Un repas',
                     description: 'Un repas à emporter, sans boisson',
                     vat_category_id: reducedVat.id,
                     price_ht: 1499,
+                    image: 'https://picsum.photos/seed/3/300/200',
                 },
                 {
                     title: 'Un médicament',
                     description: 'Un médicament qui soigne des maladies',
                     vat_category_id: superreducedVat.id,
                     price_ht: 4575,
+                    image: 'https://picsum.photos/seed/4/300/200',
                 },
             ];
 
@@ -152,14 +166,41 @@ router.get('/install', async (req, res) => {
             const roles = [
                 process.env.ADMIN,
                 process.env.EMPLOYEE,
+                process.env.MANAGER,
                 process.env.CUSTOMER,
             ];
 
             for (const role of roles) {
                 await Role.create({ name: role });
             }
+
+            await connexion.query(`
+                CREATE OR REPLACE FUNCTION calculate_order_price(order_id INTEGER)
+                    RETURNS TEXT[] AS $$
+                    DECLARE
+                        total_price NUMERIC := 0;
+                        vat_total NUMERIC := 0;
+                        order_item RECORD;
+                        vat_t TEXT[];
+                    BEGIN
+                        FOR order_item IN
+                            SELECT item_price, vat_rate, quantity
+                            FROM order_items AS oi
+                            WHERE oi.order_id = $1
+                        LOOP
+                            total_price := total_price + order_item.item_price * order_item.quantity;
+                            vat_total := vat_total + order_item.item_price * order_item.vat_rate / 100 * order_item.quantity;
+                        END LOOP;
+                    
+                        SELECT array[(total_price + vat_total), total_price, vat_total] INTO vat_t;
+                    
+                        RETURN vat_t;
+                    END;
+                    $$ LANGUAGE plpgsql;
+            `);
+
             res.send(
-                `<p>Installation réussie vous pouvez effacer les fichiers concernés</p>`
+                `<p>Installation réussie, vous pouvez effacer les fichiers concernés</p>`
             );
         } catch (e) {
             throw e;

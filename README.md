@@ -4,9 +4,9 @@
 
 WIP : branche atelier j12
 
-quasi enoncé :
-  - Fonction SQL qui retourne le total TTC de la commande en se basant sur le taux de TVA d'un produit
-  - En fonction du type de produit, calculer des TVA différentes (4 taux en France) : challenge
+quasi-énoncé :
+    - Faire une fonction SQL qui retourne le total TTC de la commande en se basant sur le taux de TVA d'un produit
+    - En fonction du type de produit, calculer des TVA différentes (4 taux en France) : challenge
 
 ---
 
@@ -15,17 +15,14 @@ quasi enoncé :
 
 Après avoir cloné le repo :
 
--   S'assurer que le port 80 est disponible, sinon modifier le docker compose ou stopper le service apache / nginx sur vos machines
-
--   `npm i && npm run install`
--   `docker compose up --build`
 -   renommer le fichier `/server/.env.example` en `/server/.env` (pas besoin avec docker)
-
+-   Installer la BDD
+-   `npm i && npm run install && nm run watch`
 -   Si besoin, il y a aussi les scripts `npm run update` et `npm run audit`.
 
 ### BDD
 
-> Se connecter à adminer avec les infos suivantes [http://localhost:8080](http://localhost:8080) quand on utilise docker
+> Se connecter à adminer avec les infos suivantes [http://localhost:8080](http://localhost:8080)
 >
 > user : student , mdp : secret, bdd : shopping
 >

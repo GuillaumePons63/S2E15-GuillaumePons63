@@ -46,10 +46,7 @@ Order.belongsToMany(Product, {
     as: 'items',
     through: OrderItem,
     foreignKey: 'order_id',
-});
-
-OrderItem.belongsTo(Order, {
-    as: 'order',
+    otherKey: 'product_id',
 });
 
 Product.belongsTo(VatCategory, {

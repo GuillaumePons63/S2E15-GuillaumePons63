@@ -5,3 +5,4 @@ test.js
 pgsql
 redisdata
 mongoData
+.vscode
