@@ -2,11 +2,11 @@
 
 ---
 
-En France, il y a plusieurs taux de TVA, il faudra donc faire une fonction SQL qui calcule le total TTC d'une commande en se basant sur le taux de TVA de chaque produit. Cette fonction devra retourner un tableau le montant HT, le total de TVA, ainsi que le montant TTC d'une commande.
+En France, il y a plusieurs taux de TVA, il faudra donc faire une fonction SQL qui calcule le total TTC d'une commande en se basant sur le taux de TVA de chaque produit. Cette fonction devra retourner un tableau contenant le montant HT, le total de TVA, ainsi que le montant TTC d'une commande.
 
-Ensuite, il faudra ajouter une méthode `calculatePrice` sur le modèle `Order` qui fera appel à cette méthode.
+Il y a une méthode `calculateOrderPrice` sur le modèle `Order` qui fait appel à la fonction SQL `calculate_order_price` que vous aurez codé.
 
-Pour tester, il faudra utiliser le controller `OrdersController`  et simuler une commande.
+Pour tester, il faudra utiliser le controller `OrdersController`  et simuler une commande (le code est fourni).
 
 Voici un schéma des tables qui vous serviront pour cet exercice
 ![schéma](./BDD-schema.png)
