@@ -3,6 +3,10 @@ const sequelize = require('./getConnexion')();
 const User = require('./User');
 
 class Order extends Model {
+    /**
+     *
+     * @returns {Array<number>}
+     */
     async calculateOrderPrice() {
         const [result, metadata] = await sequelize.query(
             `SELECT calculate_order_price(${this.id})`

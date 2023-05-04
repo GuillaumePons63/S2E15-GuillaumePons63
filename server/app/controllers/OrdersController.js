@@ -23,13 +23,12 @@ const OrdersController = {
                     product_id: prod.id,
                 });
             }
+            const result = await order.calculateOrderPrice();
+
+            res.json({ message: 'OK', result });
         } catch (e) {
             console.log('ERR', e);
         }
-
-        const result = await order.calculateOrderPrice();
-
-        res.json({ message: 'OK', result });
     },
 };
 

@@ -79,8 +79,14 @@ router.get('/install', async (req, res) => {
             // console.log(resolved);
 
             await User.create({
-                name: 'Laurent',
-                email: 'laurent@oclock.io',
+                name: 'admin',
+                email: 'admin@oclock.io',
+                password:
+                    '$2y$10$J3W4Qy6Pj0XYmFg/.y/qGuQUfBo.OfVB697xQh0.mCNoYwZgcXvtG', // secret
+            });
+            await User.create({
+                name: 'gontrand',
+                email: 'gontrand@oclock.io',
                 password:
                     '$2y$10$J3W4Qy6Pj0XYmFg/.y/qGuQUfBo.OfVB697xQh0.mCNoYwZgcXvtG', // secret
             });

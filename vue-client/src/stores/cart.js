@@ -19,7 +19,7 @@ export const useCartStore = defineStore('cart', {
             }
         },
         addProduct(product) {
-            product.qty = 1;
+            product.qty = product.quantity;
             this.products.push(product);
             localStorage.setItem('cart', JSON.stringify(this.products));
         },

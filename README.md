@@ -1,21 +1,18 @@
-# React / Vue ACL
+# Enoncé Challenge : fonctions postgreSQL
 
 ---
 
-WIP : branche atelier j12
+En France, il y a plusieurs taux de TVA, il faudra donc faire une fonction SQL qui calcule le total TTC d'une commande en se basant sur le taux de TVA de chaque produit. Cette fonction devra retourner un tableau le montant HT, le total de TVA, ainsi que le montant TTC d'une commande.
 
-quasi-énoncé :
-    - Faire une fonction SQL qui retourne le total TTC de la commande en se basant sur le taux de TVA d'un produit
-    - En fonction du type de produit, calculer des TVA différentes (4 taux en France) : challenge
+Ensuite, il faudra ajouter une méthode `calculatePrice` sur le modèle `Order` qui fera appel à cette méthode.
 
----
-
+Pour tester, il faudra utiliser le controller `OrdersController`  et simuler une commande.
 
 ## Installation
 
 Après avoir cloné le repo :
 
--   renommer le fichier `/server/.env.example` en `/server/.env` (pas besoin avec docker)
+-   Renommer le fichier `/server/.env.example` en `/server/.env`
 -   Installer la BDD
 -   `npm i && npm run install && nm run watch`
 -   Si besoin, il y a aussi les scripts `npm run update` et `npm run audit`.
@@ -27,35 +24,8 @@ Après avoir cloné le repo :
 > user : student , mdp : secret, bdd : shopping
 >
 > Il y a plusieurs users dans la BDD, avec un mot de passe unique : secret
+> 
+> Si besoin, la route ``/install`` reset la BDD.
 
-1. email : admin@oclock.io , mdp : secret (role owner, abilities : all)
-2. email : compable@oclock.io , mdp : secret (pas de roles attribué)
 
-> Pour les utilisateurs de l'app, il y a plusieurs rôles et permissions :
 
--   Le rôle admin peut tout faire => permission : 'all'
-
--   Le rôle employee peut :
-
-    -   `create-category`
-    -   `update-category`
-    -   `create-product`
-    -   `update-product`
-
--   Le rôle gestionnaire peut :
-
-    -   `create-category`
-    -   `update-category`
-    -   `delete-category`
-    -   `create-product`
-    -   `update-product`
-    -   `delete-product`
-
-### Passport
-
-Passport est installé et initialisé dans `server.js`.
-
-Sur la page login, un bouton `login with github` est présent, au clique on se login avec l'API github et ça créé un User dans notre BDD. On ne fait rien avec le token que github renvoie.
-la route va jusqu'au `AuthController`, tout ça ne sert qu'à présenter passport et à montrer qu'il faut configurer github pour autoriser une app à se connecter via github.
-
-fichiers concernés : `server.js`, `routes/api/auth.js`, `auth/github.js`, `AuthController@loginWithGithub` (méthode qui ne fait rien d'autre qu'afficher un json  :) )

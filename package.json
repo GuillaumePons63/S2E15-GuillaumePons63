@@ -5,7 +5,8 @@
         "watch": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix vue-client\" \"npm run dev --prefix vue-admin\"",
         "install": "concurrently \"npm i --prefix server\" \"npm i --prefix vue-admin\" \"npm i --prefix vue-client\"",
         "update": "concurrently \"npm update --prefix server\" \"npm update --prefix vue-client\" \"npm update --prefix vue-admin\"",
-        "audit": "concurrently \"npm audit --fix --prefix server\" \"npm audit --fix --prefix vue-client\" \"npm audit --fix --prefix vue-admin\""
+        "audit": "concurrently \"npm audit --fix --prefix server\" \"npm audit --fix --prefix vue-client\" \"npm audit --fix --prefix vue-admin\"",
+        "db:install": "cd server && node install.js && cd .."
     },
     "devDependencies": {
         "concurrently": "^8.0.1",
