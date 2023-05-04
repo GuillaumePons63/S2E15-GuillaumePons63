@@ -8,6 +8,12 @@ Ensuite, il faudra ajouter une méthode `calculatePrice` sur le modèle `Order` 
 
 Pour tester, il faudra utiliser le controller `OrdersController`  et simuler une commande.
 
+Voici un schéma des tables qui vous serviront pour cet exercice
+![schéma](./BDD-schema.png)
+
+- La table `order_items` contient les produits liées à une commande
+- La table `products` contient une référence à un taux de TVA, le taux de TVA d'un produit peut ainsi être enregistré dans  une ligne de `order_items`
+
 ## Installation
 
 Après avoir cloné le repo :
@@ -25,7 +31,4 @@ Après avoir cloné le repo :
 >
 > Il y a plusieurs users dans la BDD, avec un mot de passe unique : secret
 > 
-> Si besoin, la route ``/install`` reset la BDD.
-
-
-
+> Si besoin, la route `/install` reset la BDD.
