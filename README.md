@@ -31,4 +31,4 @@ Après avoir cloné le repo :
 >
 > Il y a plusieurs users dans la BDD, avec un mot de passe unique : secret
 > 
-> Si besoin, la route `/install` reset la BDD.
+> Si besoin, la route `/install` crée ou reset la BDD.
