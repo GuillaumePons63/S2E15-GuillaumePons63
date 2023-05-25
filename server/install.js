@@ -75,9 +75,6 @@ router.get('/install', async (req, res) => {
             await Coupon.sync();
             await OrderItem.sync();
 
-            // const resolved = await Promise.race(promises);
-            // console.log(resolved);
-
             await User.create({
                 name: 'admin',
                 email: 'admin@oclock.io',
@@ -179,31 +176,6 @@ router.get('/install', async (req, res) => {
             for (const role of roles) {
                 await Role.create({ name: role });
             }
-
-            await connexion.query(`
-                CREATE OR REPLACE FUNCTION calculate_order_price(order_id INTEGER)
-                    RETURNS TEXT[] AS $$
-                    DECLARE
-                        total_price NUMERIC := 0;
-                        vat_total NUMERIC := 0;
-                        order_item RECORD;
-                        vat_t TEXT[];
-                    BEGIN
-                        FOR order_item IN
-                            SELECT item_price, vat_rate, quantity
-                            FROM order_items AS oi
-                            WHERE oi.order_id = $1
-                        LOOP
-                            total_price := total_price + order_item.item_price * order_item.quantity;
-                            vat_total := vat_total + order_item.item_price * order_item.vat_rate / 100 * order_item.quantity;
-                        END LOOP;
-                    
-                        SELECT array[(total_price + vat_total), total_price, vat_total] INTO vat_t;
-                    
-                        RETURN vat_t;
-                    END;
-                    $$ LANGUAGE plpgsql;
-            `);
 
             res.send(
                 `<p>Installation réussie, vous pouvez effacer les fichiers concernés</p>`

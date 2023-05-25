@@ -12,7 +12,7 @@ Voici un schéma des tables qui vous serviront pour cet exercice
 ![schéma](./BDD-schema.png)
 
 - La table `order_items` contient les produits liées à une commande
-- La table `products` contient une référence à un taux de TVA, le taux de TVA d'un produit peut ainsi être enregistré dans  une ligne de `order_items`
+- La table `products` contient une référence à un taux de TVA, le taux de TVA d'un produit peut ainsi être enregistré dans une ligne de `order_items`
 
 ## Installation
 
