@@ -1,0 +1,43 @@
+{
+    "name": "express-acl",
+    "version": "1.0.0",
+    "scripts": {
+        "watch": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix vue-client\" \"npm run dev --prefix vue-admin\"",
+        "install": "concurrently \"npm i --prefix server\" \"npm i --prefix vue-admin\" \"npm i --prefix vue-client\"",
+        "update": "concurrently \"npm update --prefix server\" \"npm update --prefix vue-client\" \"npm update --prefix vue-admin\"",
+        "audit": "concurrently \"npm audit --fix --prefix server\" \"npm audit --fix --prefix vue-client\" \"npm audit --fix --prefix vue-admin\"",
+        "db:install": "cd server && node install.js && cd .."
+    },
+    "devDependencies": {
+        "concurrently": "^8.0.1",
+        "prettier": "2.8.7"
+    },
+    "prettier": {
+        "printWidth": 80,
+        "tabWidth": 4,
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "bracketSpacing": true,
+        "overrides": [
+            {
+                "files": "*.js",
+                "options": {
+                    "parser": "babel"
+                }
+            },
+            {
+                "files": "*.json",
+                "options": {
+                    "parser": "json",
+                    "tabWidth": 4
+                }
+            }
+        ],
+        "semi": true,
+        "requirePragma": false,
+        "proseWrap": "preserve",
+        "arrowParens": "avoid",
+        "htmlWhitespaceSensitivity": "css",
+        "quoteProps": "as-needed"
+    }
+}
