@@ -65,7 +65,7 @@ services:
             APP_URL: http://localhost
             PORT: 5000
             DB_NAME: shopping
-            DB_ADMIN_URL: postgres://postgres:secret@pgsql
+            DB_ADMIN_URL: postgres://student:secret@pgsql
             DB_URL: postgres://student:secret@pgsql/shopping
             DB_USERNAME: student
             DB_PASSWD: secret
